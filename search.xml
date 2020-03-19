@@ -1,132 +1,170 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search> 
-  
-  
-    
-    <entry>
-      <title>409. 最长回文串</title>
-      <link href="/lihaoran0219.github.io/2020/03/19/409-%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E4%B8%B2/"/>
-      <url>/lihaoran0219.github.io/2020/03/19/409-%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E4%B8%B2/</url>
-      
-        <content type="html"><![CDATA[<h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>给定一个包含大写字母和小写字母的字符串，找到通过这些字母构造成的最长的回文串。</p><p>在构造过程中，请注意区分大小写。比如 “Aa” 不能当做一个回文字符串。</p><p>注意:<br>假设字符串的长度不会超过 1010。</p><p>示例 1:</p><pre><code>输入:&quot;abccccdd&quot;输出:7解释:我们可以构造的最长的回文串是&quot;dccaccd&quot;, 它的长度是 7。</code></pre><a id="more"></a><h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>对于一个回文串，如果长度为偶数时，那么所有的字符都出现偶数次，如abccba</p><p>如果长度为奇数时，只有一个字符出现奇数次，如ababa</p><p>基于此，我们只需统计给定字符串中每个字符出现的次数，然后每个字符尽可能多的拿偶数个，</p><p>最后如果还有剩余的字符，再拿一个，这样的策略保证构造的回文串最长</p><h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">longestPalindrome</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">int</span>[] rec = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">58</span>];<span class="comment">// 记录s中每个字符出现的次数 A(65) -- z(122)</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">char</span> ch : s.toCharArray())</span><br><span class="line">rec[ch - <span class="string">'A'</span>]++;</span><br><span class="line"><span class="keyword">int</span> res = <span class="number">0</span>;<span class="comment">// 记录最长回文串的长度</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; rec.length; i++) &#123;</span><br><span class="line">res += rec[i] / <span class="number">2</span> * <span class="number">2</span>; <span class="comment">// 每一个字符拿偶数个</span></span><br><span class="line"><span class="keyword">if</span>(rec[i]  % <span class="number">2</span> == <span class="number">1</span> &amp;&amp; res % <span class="number">2</span> == <span class="number">0</span>)<span class="comment">//回文串中最多有1个字符出现奇数次，所以有奇数个的时候拿一个</span></span><br><span class="line">                res++; </span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-      
-      
+<search>
+  <entry>
+    <title>409. 最长回文串</title>
+    <url>/lihaoran0219.github.io/2020/03/19/409-%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E4%B8%B2/</url>
+    <content><![CDATA[<h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>给定一个包含大写字母和小写字母的字符串，找到通过这些字母构造成的最长的回文串。</p>
+<p>在构造过程中，请注意区分大小写。比如 “Aa” 不能当做一个回文字符串。</p>
+<p>注意:<br>假设字符串的长度不会超过 1010。</p>
+<p>示例 1:</p>
+<pre><code>输入:
+&quot;abccccdd&quot;
+
+输出:
+7
+
+解释:
+我们可以构造的最长的回文串是&quot;dccaccd&quot;, 它的长度是 7。</code></pre><a id="more"></a>
+
+<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>对于一个回文串，如果长度为偶数时，那么所有的字符都出现偶数次，如abccba</p>
+<p>如果长度为奇数时，只有一个字符出现奇数次，如ababa</p>
+<p>基于此，我们只需统计给定字符串中每个字符出现的次数，然后每个字符尽可能多的拿偶数个，</p>
+<p>最后如果还有剩余的字符，再拿一个，这样的策略保证构造的回文串最长</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">longestPalindrome</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">int</span>[] rec = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">58</span>];<span class="comment">// 记录s中每个字符出现的次数 A(65) -- z(122)</span></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">char</span> ch : s.toCharArray())</span><br><span class="line">			rec[ch - <span class="string">'A'</span>]++;</span><br><span class="line">		<span class="keyword">int</span> res = <span class="number">0</span>;<span class="comment">// 记录最长回文串的长度</span></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; rec.length; i++) &#123;</span><br><span class="line">			res += rec[i] / <span class="number">2</span> * <span class="number">2</span>; <span class="comment">// 每一个字符拿偶数个</span></span><br><span class="line">			<span class="keyword">if</span>(rec[i]  % <span class="number">2</span> == <span class="number">1</span> &amp;&amp; res % <span class="number">2</span> == <span class="number">0</span>)<span class="comment">//回文串中最多有1个字符出现奇数次，所以有奇数个的时候拿一个</span></span><br><span class="line">                res++; </span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
-          
-          <category> LettCode刷题 </category>
-          
+        <category>LettCode刷题</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> 算法 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>hexo博客增加评论留言功能</title>
-      <link href="/lihaoran0219.github.io/2020/03/19/hexo%E5%8D%9A%E5%AE%A2%E5%A2%9E%E5%8A%A0%E8%AF%84%E8%AE%BA%E7%95%99%E8%A8%80%E5%8A%9F%E8%83%BD/"/>
-      <url>/lihaoran0219.github.io/2020/03/19/hexo%E5%8D%9A%E5%AE%A2%E5%A2%9E%E5%8A%A0%E8%AF%84%E8%AE%BA%E7%95%99%E8%A8%80%E5%8A%9F%E8%83%BD/</url>
-      
-        <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近用hexo搭建了一个博客，这是一个用来生成静态博客的开源框架，要想开启评论功能，我们在这里借助后端云平台LeanCloud</p><p>nexT主题集成了很多评论插件，这里采用Valine</p><a id="more"></a><h3 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h3><h4 id="1-前往LeanCloud官网注册账号"><a href="#1-前往LeanCloud官网注册账号" class="headerlink" title="1.前往LeanCloud官网注册账号"></a>1.前往<a href="https://leancloud.cn" target="_blank" rel="noopener">LeanCloud官网</a>注册账号</h4><h4 id="2-创建应用"><a href="#2-创建应用" class="headerlink" title="2.创建应用"></a>2.创建应用</h4><p><img src="addTask/new.jpg" alt="Image text"></p><h4 id="3-进入应用→设置→应用key-获取你的appid和appkey"><a href="#3-进入应用→设置→应用key-获取你的appid和appkey" class="headerlink" title="3.进入应用→设置→应用key 获取你的appid和appkey"></a>3.进入应用→设置→应用key 获取你的appid和appkey</h4><p><img src="addTask/keys.jpg" alt="Image text"></p><h4 id="4-打开主题配置文件（blog-themes-next-config-yml）"><a href="#4-打开主题配置文件（blog-themes-next-config-yml）" class="headerlink" title="4.打开主题配置文件（blog/themes/next/_config.yml）"></a>4.打开主题配置文件（blog/themes/next/_config.yml）</h4><pre><code>* 搜索valine* 将enable设置为true* 将获取的id填入相应的位置</code></pre><p><img src="addTask/valine.jpg" alt="Image text"></p><h4 id="大功告成啦！！！"><a href="#大功告成啦！！！" class="headerlink" title="大功告成啦！！！"></a>大功告成啦！！！</h4>]]></content>
-      
-      
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hexo博客增加评论留言功能</title>
+    <url>/lihaoran0219.github.io/2020/03/19/hexo%E5%8D%9A%E5%AE%A2%E5%A2%9E%E5%8A%A0%E8%AF%84%E8%AE%BA%E7%95%99%E8%A8%80%E5%8A%9F%E8%83%BD/</url>
+    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近用hexo搭建了一个博客，这是一个用来生成静态博客的开源框架，要想开启评论功能，我们在这里借助后端云平台LeanCloud</p>
+<p>nexT主题集成了很多评论插件，这里采用Valine</p>
+<a id="more"></a>
+
+<h3 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h3><h4 id="1-前往LeanCloud官网注册账号"><a href="#1-前往LeanCloud官网注册账号" class="headerlink" title="1.前往LeanCloud官网注册账号"></a>1.前往<a href="https://leancloud.cn" target="_blank" rel="noopener">LeanCloud官网</a>注册账号</h4><h4 id="2-创建应用"><a href="#2-创建应用" class="headerlink" title="2.创建应用"></a>2.创建应用</h4><p><img src="hexo%E5%8D%9A%E5%AE%A2%E5%A2%9E%E5%8A%A0%E8%AF%84%E8%AE%BA%E7%95%99%E8%A8%80%E5%8A%9F%E8%83%BD/new.jpg" alt=""></p>
+<h4 id="3-进入应用→设置→应用key-获取你的appid和appkey"><a href="#3-进入应用→设置→应用key-获取你的appid和appkey" class="headerlink" title="3.进入应用→设置→应用key 获取你的appid和appkey"></a>3.进入应用→设置→应用key 获取你的appid和appkey</h4><p><img src="hexo%E5%8D%9A%E5%AE%A2%E5%A2%9E%E5%8A%A0%E8%AF%84%E8%AE%BA%E7%95%99%E8%A8%80%E5%8A%9F%E8%83%BD/keys.jpg" alt=""></p>
+<h4 id="4-打开主题配置文件（blog-themes-next-config-yml）"><a href="#4-打开主题配置文件（blog-themes-next-config-yml）" class="headerlink" title="4.打开主题配置文件（blog/themes/next/_config.yml）"></a>4.打开主题配置文件（blog/themes/next/_config.yml）</h4><pre><code>* 搜索valine
+* 将enable设置为true
+* 将获取的id填入相应的位置</code></pre><p><img src="hexo%E5%8D%9A%E5%AE%A2%E5%A2%9E%E5%8A%A0%E8%AF%84%E8%AE%BA%E7%95%99%E8%A8%80%E5%8A%9F%E8%83%BD/valine.jpg" alt=""></p>
+<h4 id="大功告成啦！！！"><a href="#大功告成啦！！！" class="headerlink" title="大功告成啦！！！"></a>大功告成啦！！！</h4>]]></content>
       <categories>
-          
-          <category> blog </category>
-          
+        <category>blog</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> blog </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>703. 数据流中的第K大元素</title>
-      <link href="/lihaoran0219.github.io/2020/03/18/703-%E6%95%B0%E6%8D%AE%E6%B5%81%E4%B8%AD%E7%9A%84%E7%AC%ACK%E5%A4%A7%E5%85%83%E7%B4%A0/"/>
-      <url>/lihaoran0219.github.io/2020/03/18/703-%E6%95%B0%E6%8D%AE%E6%B5%81%E4%B8%AD%E7%9A%84%E7%AC%ACK%E5%A4%A7%E5%85%83%E7%B4%A0/</url>
-      
-        <content type="html"><![CDATA[<h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>设计一个找到数据流中第K大元素的类（class）。注意是排序后的第K大元素，不是第K个不同的元素。</p><p>你的 KthLargest 类需要一个同时接收整数 k 和整数数组nums 的构造器，它包含数据流中的初始元素。每次调用 </p><p>KthLargest.add，返回当前数据流中第K大的元素。</p><p>示例:</p><pre><code>int k = 3;int[] arr = [4,5,8,2];KthLargest kthLargest = new KthLargest(3, arr);kthLargest.add(3);   // returns 4kthLargest.add(5);   // returns 5kthLargest.add(10);  // returns 5kthLargest.add(9);   // returns 8kthLargest.add(4);   // returns 8</code></pre><p>说明:<br>你可以假设 nums 的长度≥ k-1 且k ≥ 1。</p><a id="more"></a><h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>通过维护一个小顶堆实现</p><p>Java中有PriorityQueue类实现了优先级队列，默认小顶堆，可通过传入外部比较器实现大顶堆</p><p>小顶堆可实现队中只有K个最大的元素</p><h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">KthLargest</span> </span>&#123;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    PriorityQueue&lt;Integer&gt; pq;  <span class="comment">//优先级队列（小顶堆）</span></span><br><span class="line">    <span class="keyword">int</span> k;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">KthLargest</span><span class="params">(<span class="keyword">int</span> k, <span class="keyword">int</span>[] nums)</span> </span>&#123; </span><br><span class="line">        <span class="keyword">this</span>.k = k;</span><br><span class="line">        pq = <span class="keyword">new</span> PriorityQueue&lt;&gt;(k);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> num : nums)&#123;</span><br><span class="line">            add(num);</span><br><span class="line">        &#125;</span><br><span class="line">            </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> val)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">if</span>(pq.size() &lt; k) &#123; <span class="comment">//队中不满K个元素时继续入队</span></span><br><span class="line">            pq.offer(val);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(pq.peek() &lt; val) &#123;<span class="comment">//只有比队首元素大才入队，保证队中只有K个元素</span></span><br><span class="line">            pq.poll();<span class="comment">//弹出队首元素</span></span><br><span class="line">            pq.offer(val);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> pq.peek();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Your KthLargest object will be instantiated and called as such:</span></span><br><span class="line"><span class="comment"> * KthLargest obj = new KthLargest(k, nums);</span></span><br><span class="line"><span class="comment"> * int param_1 = obj.add(val);</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>]]></content>
-      
-      
+      <tags>
+        <tag>blog</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>703. 数据流中的第K大元素</title>
+    <url>/lihaoran0219.github.io/2020/03/18/703-%E6%95%B0%E6%8D%AE%E6%B5%81%E4%B8%AD%E7%9A%84%E7%AC%ACK%E5%A4%A7%E5%85%83%E7%B4%A0/</url>
+    <content><![CDATA[<h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>设计一个找到数据流中第K大元素的类（class）。注意是排序后的第K大元素，不是第K个不同的元素。</p>
+<p>你的 KthLargest 类需要一个同时接收整数 k 和整数数组nums 的构造器，它包含数据流中的初始元素。每次调用 </p>
+<p>KthLargest.add，返回当前数据流中第K大的元素。</p>
+<p>示例:</p>
+<pre><code>int k = 3;
+int[] arr = [4,5,8,2];
+KthLargest kthLargest = new KthLargest(3, arr);
+kthLargest.add(3);   // returns 4
+kthLargest.add(5);   // returns 5
+kthLargest.add(10);  // returns 5
+kthLargest.add(9);   // returns 8
+kthLargest.add(4);   // returns 8</code></pre><p>说明:<br>你可以假设 nums 的长度≥ k-1 且k ≥ 1。</p>
+<a id="more"></a>
+
+<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>通过维护一个小顶堆实现</p>
+<p>Java中有PriorityQueue类实现了优先级队列，默认小顶堆，可通过传入外部比较器实现大顶堆</p>
+<p>小顶堆可实现队中只有K个最大的元素</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">KthLargest</span> </span>&#123;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    PriorityQueue&lt;Integer&gt; pq;  <span class="comment">//优先级队列（小顶堆）</span></span><br><span class="line">    <span class="keyword">int</span> k;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">KthLargest</span><span class="params">(<span class="keyword">int</span> k, <span class="keyword">int</span>[] nums)</span> </span>&#123; </span><br><span class="line">        <span class="keyword">this</span>.k = k;</span><br><span class="line">        pq = <span class="keyword">new</span> PriorityQueue&lt;&gt;(k);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> num : nums)&#123;</span><br><span class="line">            add(num);</span><br><span class="line">        &#125;</span><br><span class="line">            </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> val)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">if</span>(pq.size() &lt; k) &#123; <span class="comment">//队中不满K个元素时继续入队</span></span><br><span class="line">            pq.offer(val);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(pq.peek() &lt; val) &#123;<span class="comment">//只有比队首元素大才入队，保证队中只有K个元素</span></span><br><span class="line">            pq.poll();<span class="comment">//弹出队首元素</span></span><br><span class="line">            pq.offer(val);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> pq.peek();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Your KthLargest object will be instantiated and called as such:</span></span><br><span class="line"><span class="comment"> * KthLargest obj = new KthLargest(k, nums);</span></span><br><span class="line"><span class="comment"> * int param_1 = obj.add(val);</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>]]></content>
       <categories>
-          
-          <category> LettCode刷题 </category>
-          
+        <category>LettCode刷题</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> 算法 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>863.矩形重叠</title>
-      <link href="/lihaoran0219.github.io/2020/03/18/863-%E7%9F%A9%E5%BD%A2%E9%87%8D%E5%8F%A0/"/>
-      <url>/lihaoran0219.github.io/2020/03/18/863-%E7%9F%A9%E5%BD%A2%E9%87%8D%E5%8F%A0/</url>
-      
-        <content type="html"><![CDATA[<h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p>矩形以列表 [x1, y1, x2, y2] 的形式表示，其中 (x1, y1) 为左下角的坐标，(x2, y2) 是右上角的坐标。</p><p>如果相交的面积为正，则称两矩形重叠。需要明确的是，只在角或边接触的两个矩形不构成重叠。</p><p>给出两个矩形，判断它们是否重叠并返回结果。</p><p>示例 1：</p><pre><code>输入：rec1 = [0,0,2,2], rec2 = [1,1,3,3]输出：true</code></pre><p>示例 2：</p><pre><code>输入：rec1 = [0,0,1,1], rec2 = [1,0,2,1]输出：false</code></pre><a id="more"></a><h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>利用反证思想，判断两个矩形是否不重叠显然要简单一些</p><p>固定一个矩形，另一个矩形有四种情况：</p><pre><code>矩形 rec2 在矩形 rec1 的左侧；（rec2右下角横坐标小于等于rec1左下角横坐标）矩形 rec2 在矩形 rec1 的右侧；（rec2左下角横坐标大于等于rec1右下角横坐标）矩形 rec2 在矩形 rec1 的上方；（rec2左下角纵坐标大于等于rec1左下角纵坐标）矩形 rec2 在矩形 rec1 的下方  （rec2左上角纵坐标小于等于rec1左下角纵坐标）</code></pre><h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isRectangleOverlap</span><span class="params">(<span class="keyword">int</span>[] rec1, <span class="keyword">int</span>[] rec2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> !(rec2[<span class="number">1</span>] &gt;= rec1[<span class="number">3</span>]||  <span class="comment">//rec2在rec1上方</span></span><br><span class="line"> rec2[<span class="number">3</span>] &lt;= rec1[<span class="number">1</span>] ||  <span class="comment">//rec2在rec1下方</span></span><br><span class="line"> rec2[<span class="number">2</span>] &lt;= rec1[<span class="number">0</span>]|| <span class="comment">//rec2在rec1左方</span></span><br><span class="line"> rec2[<span class="number">0</span>] &gt;= rec1[<span class="number">2</span>]);  <span class="comment">//rec2在rec1右方</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-      
-      
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>863.矩形重叠</title>
+    <url>/lihaoran0219.github.io/2020/03/18/863-%E7%9F%A9%E5%BD%A2%E9%87%8D%E5%8F%A0/</url>
+    <content><![CDATA[<h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p>矩形以列表 [x1, y1, x2, y2] 的形式表示，其中 (x1, y1) 为左下角的坐标，(x2, y2) 是右上角的坐标。</p>
+<p>如果相交的面积为正，则称两矩形重叠。需要明确的是，只在角或边接触的两个矩形不构成重叠。</p>
+<p>给出两个矩形，判断它们是否重叠并返回结果。</p>
+<p>示例 1：</p>
+<pre><code>输入：rec1 = [0,0,2,2], rec2 = [1,1,3,3]
+输出：true</code></pre><p>示例 2：</p>
+<pre><code>输入：rec1 = [0,0,1,1], rec2 = [1,0,2,1]
+输出：false</code></pre><a id="more"></a>
+
+<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>利用反证思想，判断两个矩形是否不重叠显然要简单一些</p>
+<p>固定一个矩形，另一个矩形有四种情况：</p>
+<pre><code>矩形 rec2 在矩形 rec1 的左侧；（rec2右下角横坐标小于等于rec1左下角横坐标）
+
+矩形 rec2 在矩形 rec1 的右侧；（rec2左下角横坐标大于等于rec1右下角横坐标）
+
+矩形 rec2 在矩形 rec1 的上方；（rec2左下角纵坐标大于等于rec1左下角纵坐标）
+
+矩形 rec2 在矩形 rec1 的下方  （rec2左上角纵坐标小于等于rec1左下角纵坐标）</code></pre><h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isRectangleOverlap</span><span class="params">(<span class="keyword">int</span>[] rec1, <span class="keyword">int</span>[] rec2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> !(rec2[<span class="number">1</span>] &gt;= rec1[<span class="number">3</span>]||  <span class="comment">//rec2在rec1上方</span></span><br><span class="line">		 rec2[<span class="number">3</span>] &lt;= rec1[<span class="number">1</span>] ||  <span class="comment">//rec2在rec1下方	</span></span><br><span class="line">		 rec2[<span class="number">2</span>] &lt;= rec1[<span class="number">0</span>]	|| <span class="comment">//rec2在rec1左方</span></span><br><span class="line">		 rec2[<span class="number">0</span>] &gt;= rec1[<span class="number">2</span>]	);  <span class="comment">//rec2在rec1右方</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
       <categories>
-          
-          <category> LettCode刷题 </category>
-          
+        <category>LettCode刷题</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> 算法 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>动态规划和贪心+二分查找解决最长上升子序列问题</title>
-      <link href="/lihaoran0219.github.io/2020/03/18/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E5%92%8C%E8%B4%AA%E5%BF%83-%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%E8%A7%A3%E5%86%B3%E6%9C%80%E9%95%BF%E4%B8%8A%E5%8D%87%E5%AD%90%E5%BA%8F%E5%88%97%E9%97%AE%E9%A2%98/"/>
-      <url>/lihaoran0219.github.io/2020/03/18/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E5%92%8C%E8%B4%AA%E5%BF%83-%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%E8%A7%A3%E5%86%B3%E6%9C%80%E9%95%BF%E4%B8%8A%E5%8D%87%E5%AD%90%E5%BA%8F%E5%88%97%E9%97%AE%E9%A2%98/</url>
-      
-        <content type="html"><![CDATA[<a id="more"></a><h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><h2 id="解法一：动态规划（O-n-2-）"><a href="#解法一：动态规划（O-n-2-）" class="headerlink" title="解法一：动态规划（O(n^2)）"></a>解法一：动态规划（O(n^2)）</h2><p>dp[i]表示以array[i]结尾的最长上升子序列的长度<br>dp[i] = max(dp[0] – dp[j]) + 1 (其中j &lt; i 且 array[j] &lt; array[i])</p><p>例： 1,7,3,5,9,4,8</p><p>（1）dp[i]的元素初值都为1</p><p>（2）dp[0]表示以1结尾的最长上升子序列的长度，为1 </p><p>（3）dp[1]表示以7结尾的最长上升子序列的长度:</p><ul><li>看dp[0],因为array[0] &lt; array[1],所以dp[1] = dp[0] + 1 = 2</li></ul><p>（4）dp[2]表示以7结尾的最长上升子序列的长度:</p><pre><code>看dp[0],dp[1],只有array[0] &lt; array[2]所以dp[2] = dp[0] + 1 = 2</code></pre><p>（5）dp[3]表示以5结尾的最长上升子序列的长度:</p><pre><code>看dp[0],dp[1],dp[2],array[0] &lt; array[3],array[2] &lt; array[3]dp[0]和dp[2]中取最大值dp[2] = 2所以dp[3] = dp[2] + 1 = 3</code></pre><p>（6）dp[4]表示以9结尾的最长上升子序列的长度:</p><pre><code>看dp[0],dp[1],dp[2],dp[3]array[0],array[1],array[2],array[3]都小于&lt;array[4]dp[0],dp[1],dp[2],dp[3]中取最大值dp[3] = 3所以dp[3] = dp[3] + 1 = 4</code></pre><p>（7）dp[5]表示以4结尾的最长上升子序列的长度:</p><pre><code>看dp[0],dp[1],dp[2],dp[3]，dp[4]array[0],array[2]小于&lt;array[5]dp[0],dp[2]中取最大值dp[2] = 2所以dp[3] = dp[2] + 1 = 3</code></pre><p>（8）dp[6]表示以8结尾的最长上升子序列的长度:</p><pre><code>看dp[0],dp[1],dp[2],dp[3],dp[4],dp[5]array[0],array[1],array[2],array[3],array[5]都小于&lt;array[6]dp[0],dp[1],dp[2],dp[3],dp[5]中取最大值 3所以dp[3] = 3 + 1 = 4</code></pre><p>(9)遍历完数组array,求dp数组中的最大值即为最长上升子序列的长度</p><h2 id="解法二：贪心-二分查找（O-nlogn-）"><a href="#解法二：贪心-二分查找（O-nlogn-）" class="headerlink" title="解法二：贪心+ 二分查找（O(nlogn)）"></a>解法二：贪心+ 二分查找（O(nlogn)）</h2><p>对于以某一个数结尾的最长上升子序列，当然是结尾的数越小越好    </p><p>创建一个list,初始有一个元素array[0]</p><p>从下标为1处开始扫描数组array</p><p>如果比list中的最后一个数大，说明可构成上升子序列，直接加入到list中</p><p>如果比list中的最后一个数小，则找到list中第一个大于或等于这个数的元素替换</p><p>查找用二分查找实现</p><p>最终list的长度即为最长上升子序列的长度</p><h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span>&#123;</span><br><span class="line">        <span class="comment">//动态规划法</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">lengthOfLIS</span><span class="params">(<span class="keyword">int</span>[] array)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[array.length];</span><br><span class="line">            Arrays.fill(dp, <span class="number">1</span>);</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; dp.length; i++) &#123;</span><br><span class="line">                <span class="keyword">int</span> max = <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">for</span> (; j &lt; i; j++) &#123;</span><br><span class="line">                    <span class="keyword">if</span>(array[j] &lt; array[i]) &#123;</span><br><span class="line">                        <span class="keyword">if</span>(dp[j] &gt; max) </span><br><span class="line">                            max = dp[j];</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                dp[i] = max + <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> maxInArray(dp);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxInArray</span><span class="params">(<span class="keyword">int</span>[] dp)</span> </span>&#123;<span class="comment">//返回dp数组中的最大值</span></span><br><span class="line"><span class="keyword">int</span> max = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; dp.length; i++) &#123;</span><br><span class="line"><span class="keyword">if</span>(dp[i] &gt; max)</span><br><span class="line">max = dp[i];</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> max;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="comment">//贪心 + 二分查找 </span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">lengthOfLIS</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(nums.length == <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        List&lt;Integer&gt; res = <span class="keyword">new</span> ArrayList&lt;&gt;();<span class="comment">//res中的元素保持升序</span></span><br><span class="line">        res.add(nums[<span class="number">0</span>]);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; nums.length; i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(nums[i] &gt; res.get(res.size() - <span class="number">1</span>))</span><br><span class="line">                res.add(nums[i]);</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                res.set(binarySearch(res, nums[i]), nums[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res.size();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">binarySearch</span><span class="params">(List&lt;Integer&gt; res, <span class="keyword">int</span> key)</span></span>&#123;<span class="comment">//找到list中第一个大于key的值，返回下标</span></span><br><span class="line">        <span class="keyword">int</span> l = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> r = res.size() - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span>(l &lt;= r)&#123;</span><br><span class="line">            <span class="keyword">int</span> mid = l + (r - l) / <span class="number">2</span>;</span><br><span class="line">            <span class="keyword">if</span>(res.get(mid) &lt; key)  <span class="comment">//注意：if else 的位置不能换</span></span><br><span class="line">                l = mid + <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                r = mid - <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> l;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-      
-      
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>动态规划和贪心+二分查找解决最长上升子序列问题</title>
+    <url>/lihaoran0219.github.io/2020/03/18/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E5%92%8C%E8%B4%AA%E5%BF%83-%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%E8%A7%A3%E5%86%B3%E6%9C%80%E9%95%BF%E4%B8%8A%E5%8D%87%E5%AD%90%E5%BA%8F%E5%88%97%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<a id="more"></a>
+
+<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><h2 id="解法一：动态规划（O-n-2-）"><a href="#解法一：动态规划（O-n-2-）" class="headerlink" title="解法一：动态规划（O(n^2)）"></a>解法一：动态规划（O(n^2)）</h2><p>dp[i]表示以array[i]结尾的最长上升子序列的长度<br>dp[i] = max(dp[0] – dp[j]) + 1 (其中j &lt; i 且 array[j] &lt; array[i])</p>
+<p>例： 1,7,3,5,9,4,8</p>
+<p>（1）dp[i]的元素初值都为1</p>
+<p>（2）dp[0]表示以1结尾的最长上升子序列的长度，为1 </p>
+<p>（3）dp[1]表示以7结尾的最长上升子序列的长度:</p>
+<ul>
+<li>看dp[0],因为array[0] &lt; array[1],所以dp[1] = dp[0] + 1 = 2</li>
+</ul>
+<p>（4）dp[2]表示以7结尾的最长上升子序列的长度:</p>
+<pre><code>看dp[0],dp[1],只有array[0] &lt; array[2]
+
+所以dp[2] = dp[0] + 1 = 2</code></pre><p>（5）dp[3]表示以5结尾的最长上升子序列的长度:</p>
+<pre><code>看dp[0],dp[1],dp[2],array[0] &lt; array[3],array[2] &lt; array[3]
+
+dp[0]和dp[2]中取最大值dp[2] = 2
+
+所以dp[3] = dp[2] + 1 = 3</code></pre><p>（6）dp[4]表示以9结尾的最长上升子序列的长度:</p>
+<pre><code>看dp[0],dp[1],dp[2],dp[3]
+
+array[0],array[1],array[2],array[3]都小于&lt;array[4]
+
+dp[0],dp[1],dp[2],dp[3]中取最大值dp[3] = 3
+
+所以dp[3] = dp[3] + 1 = 4</code></pre><p>（7）dp[5]表示以4结尾的最长上升子序列的长度:</p>
+<pre><code>看dp[0],dp[1],dp[2],dp[3]，dp[4]
+
+array[0],array[2]小于&lt;array[5]
+
+dp[0],dp[2]中取最大值dp[2] = 2
+
+所以dp[3] = dp[2] + 1 = 3</code></pre><p>（8）dp[6]表示以8结尾的最长上升子序列的长度:</p>
+<pre><code>看dp[0],dp[1],dp[2],dp[3],dp[4],dp[5]
+
+array[0],array[1],array[2],array[3],array[5]都小于&lt;array[6]
+
+dp[0],dp[1],dp[2],dp[3],dp[5]中取最大值 3
+
+所以dp[3] = 3 + 1 = 4</code></pre><p>(9)遍历完数组array,求dp数组中的最大值即为最长上升子序列的长度</p>
+<h2 id="解法二：贪心-二分查找（O-nlogn-）"><a href="#解法二：贪心-二分查找（O-nlogn-）" class="headerlink" title="解法二：贪心+ 二分查找（O(nlogn)）"></a>解法二：贪心+ 二分查找（O(nlogn)）</h2><p>对于以某一个数结尾的最长上升子序列，当然是结尾的数越小越好    </p>
+<p>创建一个list,初始有一个元素array[0]</p>
+<p>从下标为1处开始扫描数组array</p>
+<p>如果比list中的最后一个数大，说明可构成上升子序列，直接加入到list中</p>
+<p>如果比list中的最后一个数小，则找到list中第一个大于或等于这个数的元素替换</p>
+<p>查找用二分查找实现</p>
+<p>最终list的长度即为最长上升子序列的长度</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Solution</span></span>&#123;</span><br><span class="line">        <span class="comment">//动态规划法</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">lengthOfLIS</span><span class="params">(<span class="keyword">int</span>[] array)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[array.length];</span><br><span class="line">            Arrays.fill(dp, <span class="number">1</span>);</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; dp.length; i++) &#123;</span><br><span class="line">                <span class="keyword">int</span> max = <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">for</span> (; j &lt; i; j++) &#123;</span><br><span class="line">                    <span class="keyword">if</span>(array[j] &lt; array[i]) &#123;</span><br><span class="line">                        <span class="keyword">if</span>(dp[j] &gt; max) </span><br><span class="line">                            max = dp[j];</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                dp[i] = max + <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> maxInArray(dp);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxInArray</span><span class="params">(<span class="keyword">int</span>[] dp)</span> </span>&#123;<span class="comment">//返回dp数组中的最大值</span></span><br><span class="line">		<span class="keyword">int</span> max = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; dp.length; i++) &#123;</span><br><span class="line">			<span class="keyword">if</span>(dp[i] &gt; max)</span><br><span class="line">				max = dp[i];</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> max;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="comment">//贪心 + 二分查找 </span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">lengthOfLIS</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(nums.length == <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        List&lt;Integer&gt; res = <span class="keyword">new</span> ArrayList&lt;&gt;();<span class="comment">//res中的元素保持升序</span></span><br><span class="line">        res.add(nums[<span class="number">0</span>]);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; nums.length; i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(nums[i] &gt; res.get(res.size() - <span class="number">1</span>))</span><br><span class="line">                res.add(nums[i]);</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                res.set(binarySearch(res, nums[i]), nums[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res.size();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">binarySearch</span><span class="params">(List&lt;Integer&gt; res, <span class="keyword">int</span> key)</span></span>&#123;<span class="comment">//找到list中第一个大于key的值，返回下标</span></span><br><span class="line">        <span class="keyword">int</span> l = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> r = res.size() - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span>(l &lt;= r)&#123;</span><br><span class="line">            <span class="keyword">int</span> mid = l + (r - l) / <span class="number">2</span>;</span><br><span class="line">            <span class="keyword">if</span>(res.get(mid) &lt; key)  <span class="comment">//注意：if else 的位置不能换</span></span><br><span class="line">	                l = mid + <span class="number">1</span>;</span><br><span class="line">	            <span class="keyword">else</span></span><br><span class="line">	                r = mid - <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> l;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
-          
-          <category> LettCode刷题 </category>
-          
+        <category>LettCode刷题</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> 算法 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-  
-  
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
 </search>
