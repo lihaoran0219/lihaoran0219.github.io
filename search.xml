@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>650.只有两个键的键盘</title>
+      <link href="/lihaoran0219.github.io/2020/03/21/650.%E5%8F%AA%E6%9C%89%E4%B8%A4%E4%B8%AA%E9%94%AE%E7%9A%84%E9%94%AE%E7%9B%98/"/>
+      <url>/lihaoran0219.github.io/2020/03/21/650.%E5%8F%AA%E6%9C%89%E4%B8%A4%E4%B8%AA%E9%94%AE%E7%9A%84%E9%94%AE%E7%9B%98/</url>
+      
+        <content type="html"><![CDATA[<h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>最初在一个记事本上只有一个字符 ‘A’。你每次可以对这个记事本进行两种操作：</p><p>Copy All (复制全部) : 你可以复制这个记事本中的所有字符(部分的复制是不允许的)。</p><p>Paste (粘贴) : 你可以粘贴你上一次复制的字符。</p><p>给定一个数字 n 。你需要使用最少的操作次数，在记事本中打印出恰好 n 个 ‘A’。</p><p>输出能够打印出 n 个 ‘A’ 的最少操作次数。</p><p>示例 1:</p><pre><code>输入: 3输出: 3解释:最初, 我们只有一个字符 &apos;A&apos;。第 1 步, 我们使用 Copy All 操作。第 2 步, 我们使用 Paste 操作来获得 &apos;AA&apos;。第 3 步, 我们使用 Paste 操作来获得 &apos;AAA&apos;。</code></pre><p>说明:</p><p>n 的取值范围是 [1, 1000] 。</p><a id="more"></a><h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>当n为质数时，只能一个一个复制得到n个’A’</p><p>当n不为质数时，我们可以找到n除了自身最大的因数：</p><pre><code>例如：n=1515的最大因数为5，可由5个&apos;A&apos;再复制两次得到可得递归方程为：假设g是n除了自身最大的因数f(n) = f(g) + n / g  n不是质数      （实际是f(g) + 1  + n/g - 1）f(n) = n             n是质数</code></pre><h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><h4 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minSteps</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">if</span>(n == <span class="number">1</span>)<span class="keyword">return</span> <span class="number">0</span>;  <span class="comment">//递归出口</span></span><br><span class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> i = n / <span class="number">2</span>; i &gt; <span class="number">0</span>; i--)&#123;  <span class="comment">//找n的最大因数</span></span><br><span class="line">           <span class="keyword">if</span>(n % i == <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> minSteps(i) + n / i;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> n;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h4 id="递推"><a href="#递推" class="headerlink" title="递推"></a>递推</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minSteps</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[n + <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= n; i++)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = i / <span class="number">2</span>; j &gt; <span class="number">0</span>; j--)&#123;</span><br><span class="line">                <span class="keyword">if</span>(i % j == <span class="number">0</span>)&#123;</span><br><span class="line">                    dp[i] = dp[j] + i / j;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[n];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> LettCode刷题 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 算法 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>水壶问题（裴蜀定理的应用）</title>
       <link href="/lihaoran0219.github.io/2020/03/21/%E6%B0%B4%E5%A3%B6%E9%97%AE%E9%A2%98%EF%BC%88%E8%A3%B4%E8%9C%80%E5%AE%9A%E7%90%86%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%89/"/>
       <url>/lihaoran0219.github.io/2020/03/21/%E6%B0%B4%E5%A3%B6%E9%97%AE%E9%A2%98%EF%BC%88%E8%A3%B4%E8%9C%80%E5%AE%9A%E7%90%86%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%89/</url>
