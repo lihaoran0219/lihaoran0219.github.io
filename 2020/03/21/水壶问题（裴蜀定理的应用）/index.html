@@ -20,20 +20,20 @@
     var CONFIG = {"hostname":"lihaoran0219.github.io","root":"/lihaoran0219.github.io/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"W9LZ4822YC","apiKey":"c2a37549a8b51684877fcff78cf0d514","indexName":"MyBlog","hits":{"per_page":10},"labels":{"input_placeholder":"输入关键词进行搜索","hits_empty":"找不到关于“${query}”的文章","hits_stats":"共找到 ${hits}篇文章，耗时 ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="题目描述给定一个包含大写字母和小写字母的字符串，找到通过这些字母构造成的最长的回文串。 在构造过程中，请注意区分大小写。比如 “Aa” 不能当做一个回文字符串。 注意:假设字符串的长度不会超过 1010。 示例 1: 输入: &quot;abccccdd&quot;  输出: 7  解释: 我们可以构造的最长的回文串是&quot;dccaccd&quot;, 它的长度是 7。">
+  <meta name="description" content="问题 描述有两个容量分别为 x升 和 y升 的水壶以及无限多的水。请判断能否通过使用这两个水壶，从而可以得到恰好 z升 的水？ 如果可以，最后请用以上水壶中的一或两个来盛放取得的 z升 水。 你允许：  装满任意一个水壶 清空任意一个水壶 从一个水壶向另外一个水壶倒水，直到装满或者倒空  示例 1: (From the famous “Die Hard” example) 输入: x &#x3D; 3, y">
 <meta property="og:type" content="article">
-<meta property="og:title" content="409. 最长回文串">
-<meta property="og:url" content="https://lihaoran0219.github.io/2020/03/19/409-%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E4%B8%B2/index.html">
+<meta property="og:title" content="水壶问题（裴蜀定理的应用）">
+<meta property="og:url" content="https://lihaoran0219.github.io/2020/03/21/%E6%B0%B4%E5%A3%B6%E9%97%AE%E9%A2%98%EF%BC%88%E8%A3%B4%E8%9C%80%E5%AE%9A%E7%90%86%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%89/index.html">
 <meta property="og:site_name" content="李浩冉的博客">
-<meta property="og:description" content="题目描述给定一个包含大写字母和小写字母的字符串，找到通过这些字母构造成的最长的回文串。 在构造过程中，请注意区分大小写。比如 “Aa” 不能当做一个回文字符串。 注意:假设字符串的长度不会超过 1010。 示例 1: 输入: &quot;abccccdd&quot;  输出: 7  解释: 我们可以构造的最长的回文串是&quot;dccaccd&quot;, 它的长度是 7。">
+<meta property="og:description" content="问题 描述有两个容量分别为 x升 和 y升 的水壶以及无限多的水。请判断能否通过使用这两个水壶，从而可以得到恰好 z升 的水？ 如果可以，最后请用以上水壶中的一或两个来盛放取得的 z升 水。 你允许：  装满任意一个水壶 清空任意一个水壶 从一个水壶向另外一个水壶倒水，直到装满或者倒空  示例 1: (From the famous “Die Hard” example) 输入: x &#x3D; 3, y">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-03-19T03:08:29.000Z">
-<meta property="article:modified_time" content="2020-03-19T06:19:40.013Z">
+<meta property="article:published_time" content="2020-03-21T03:06:19.000Z">
+<meta property="article:modified_time" content="2020-03-21T03:44:33.268Z">
 <meta property="article:author" content="李浩冉">
 <meta property="article:tag" content="算法">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://lihaoran0219.github.io/2020/03/19/409-%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E4%B8%B2/">
+<link rel="canonical" href="https://lihaoran0219.github.io/2020/03/21/%E6%B0%B4%E5%A3%B6%E9%97%AE%E9%A2%98%EF%BC%88%E8%A3%B4%E8%9C%80%E5%AE%9A%E7%90%86%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%89/">
 
 
 <script id="page-configurations">
@@ -45,7 +45,7 @@
   };
 </script>
 
-  <title>409. 最长回文串 | 李浩冉的博客</title>
+  <title>水壶问题（裴蜀定理的应用） | 李浩冉的博客</title>
   
 
 
@@ -201,7 +201,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://lihaoran0219.github.io/2020/03/19/409-%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E4%B8%B2/">
+    <link itemprop="mainEntityOfPage" href="https://lihaoran0219.github.io/2020/03/21/%E6%B0%B4%E5%A3%B6%E9%97%AE%E9%A2%98%EF%BC%88%E8%A3%B4%E8%9C%80%E5%AE%9A%E7%90%86%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/lihaoran0219.github.io/images/avatar.gif">
@@ -214,7 +214,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          409. 最长回文串
+          水壶问题（裴蜀定理的应用）
         </h1>
 
         <div class="post-meta">
@@ -225,7 +225,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-03-19 11:08:29 / 修改时间：14:19:40" itemprop="dateCreated datePublished" datetime="2020-03-19T11:08:29+08:00">2020-03-19</time>
+              <time title="创建时间：2020-03-21 11:06:19 / 修改时间：11:44:33" itemprop="dateCreated datePublished" datetime="2020-03-21T11:06:19+08:00">2020-03-21</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -238,7 +238,7 @@
             </span>
 
           
-            <span id="/lihaoran0219.github.io/2020/03/19/409-%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E4%B8%B2/" class="post-meta-item leancloud_visitors" data-flag-title="409. 最长回文串" title="阅读次数">
+            <span id="/lihaoran0219.github.io/2020/03/21/%E6%B0%B4%E5%A3%B6%E9%97%AE%E9%A2%98%EF%BC%88%E8%A3%B4%E8%9C%80%E5%AE%9A%E7%90%86%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%89/" class="post-meta-item leancloud_visitors" data-flag-title="水壶问题（裴蜀定理的应用）" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -260,8 +260,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/lihaoran0219.github.io/2020/03/19/409-%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E4%B8%B2/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/lihaoran0219.github.io/2020/03/19/409-%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E4%B8%B2/" itemprop="commentCount"></span>
+    <a title="valine" href="/lihaoran0219.github.io/2020/03/21/%E6%B0%B4%E5%A3%B6%E9%97%AE%E9%A2%98%EF%BC%88%E8%A3%B4%E8%9C%80%E5%AE%9A%E7%90%86%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%89/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/lihaoran0219.github.io/2020/03/21/%E6%B0%B4%E5%A3%B6%E9%97%AE%E9%A2%98%EF%BC%88%E8%A3%B4%E8%9C%80%E5%AE%9A%E7%90%86%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%89/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -276,24 +276,35 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>给定一个包含大写字母和小写字母的字符串，找到通过这些字母构造成的最长的回文串。</p>
-<p>在构造过程中，请注意区分大小写。比如 “Aa” 不能当做一个回文字符串。</p>
-<p>注意:<br>假设字符串的长度不会超过 1010。</p>
-<p>示例 1:</p>
-<pre><code>输入:
-&quot;abccccdd&quot;
+        <h3 id="问题-描述"><a href="#问题-描述" class="headerlink" title="问题 描述"></a>问题 描述</h3><p>有两个容量分别为 x升 和 y升 的水壶以及无限多的水。请判断能否通过使用这两个水壶，从而可以得到恰好 z升 的水？</p>
+<p>如果可以，最后请用以上水壶中的一或两个来盛放取得的 z升 水。</p>
+<p>你允许：</p>
+<ul>
+<li>装满任意一个水壶</li>
+<li>清空任意一个水壶</li>
+<li>从一个水壶向另外一个水壶倒水，直到装满或者倒空</li>
+</ul>
+<p>示例 1: (From the famous “Die Hard” example)</p>
+<pre><code>输入: x = 3, y = 5, z = 4
+输出: True
+解释：将y装满，再倒给x,此时y还剩2
+     把x清空，将y中剩的2L倒给x(此时x还能装1L)           
+     将y装满，再给x倒水将x装满，此时y中剩下的恰好是4L</code></pre><p>示例 2:</p>
+<pre><code>输入: x = 2, y = 6, z = 5
+输出: False</code></pre><a id="more"></a>
 
-输出:
-7
+<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>这道题的意思很简单，就是求一个x升的水壶和一个y升的水壶能否装z升的水，即：</p>
+<pre><code>ax + by = z是否有解</code></pre><p>这里先引用百度对于裴祖公式的解释</p>
+<pre><code>在数论中，裴蜀定理是一个关于最大公约数（或最大公约式）的定理。裴蜀定理得名于法国数学家艾蒂安·裴蜀，</code></pre><p>说明了<strong>对任何整数a、b和它们的最大公约数d</strong>，关于未知数x和y的线性丢番图方程（称为裴蜀等式）：</p>
+<p><strong>ax + by = m有解当且仅当m是d的倍数。</strong></p>
+<pre><code>裴蜀等式有解时必然有无穷多个整数解 ，每组解x、y都称为裴蜀数，可用辗转相除法求得。
 
-解释:
-我们可以构造的最长的回文串是&quot;dccaccd&quot;, 它的长度是 7。</code></pre><a id="more"></a>
-
-<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>对于一个回文串，如果长度为偶数时，那么所有的字符都出现偶数次，如abccba</p>
-<p>如果长度为奇数时，只有一个字符出现奇数次，如ababa</p>
-<p>基于此，我们只需统计给定字符串中每个字符出现的次数，然后每个字符尽可能多的拿偶数个，</p>
-<p>最后如果还有剩余的字符，再拿一个，这样的策略保证构造的回文串最长</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">longestPalindrome</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">int</span>[] rec = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">58</span>];<span class="comment">// 记录s中每个字符出现的次数 A(65) -- z(122)</span></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">char</span> ch : s.toCharArray())</span><br><span class="line">			rec[ch - <span class="string">'A'</span>]++;</span><br><span class="line">		<span class="keyword">int</span> res = <span class="number">0</span>;<span class="comment">// 记录最长回文串的长度</span></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; rec.length; i++) &#123;</span><br><span class="line">			res += rec[i] / <span class="number">2</span> * <span class="number">2</span>; <span class="comment">// 每一个字符拿偶数个</span></span><br><span class="line">			<span class="keyword">if</span>(rec[i]  % <span class="number">2</span> == <span class="number">1</span> &amp;&amp; res % <span class="number">2</span> == <span class="number">0</span>)<span class="comment">//回文串中最多有1个字符出现奇数次，所以有奇数个的时候拿一个</span></span><br><span class="line">                res++; </span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+例如，12和42的最大公因子是6，则方程12x + 42y = 6有解。
+事实上有（-3）×12 + 1×42 = 6及4×12 + (-1）×42 = 6。
+特别来说，方程 ax + by = 1 有解当且仅当整数a和b互素。
+裴蜀等式也可以用来给最大公约数定义：d其实就是最小的可以写成ax + by形式的正整数。这个定义的本质是整环中“理想”的概念。因此对于多项式整环也有相应的裴蜀定理。</code></pre><p><strong>它的一个重要推论是：a,b互质的充要条件是存在整数x,y使ax+by=1.</strong></p>
+<p>因此，我们只需判断x和y的最大公约数能否被z整除即可（在此基础上，还需要z &lt;= x + y,否则两个水壶装不下）</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">canMeasureWater</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y, <span class="keyword">int</span> z)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> gcd = gcd(x, y);<span class="comment">//最大公约数</span></span><br><span class="line">        <span class="keyword">if</span>(gcd == <span class="number">0</span>)<span class="keyword">return</span> z &lt;= x + y;</span><br><span class="line">        <span class="keyword">return</span> z % gcd == <span class="number">0</span> &amp;&amp; z &lt;= x + y;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">gcd</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span>&#123;<span class="comment">//返回a,b的最大公约数</span></span><br><span class="line">        <span class="keyword">if</span>(b == <span class="number">0</span>)<span class="keyword">return</span> a;</span><br><span class="line">        <span class="keyword">return</span> gcd(b, a % b);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -308,7 +319,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://lihaoran0219.github.io/2020/03/19/409-%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E4%B8%B2/" title="409. 最长回文串">https://lihaoran0219.github.io/2020/03/19/409-最长回文串/</a>
+    <a href="https://lihaoran0219.github.io/2020/03/21/%E6%B0%B4%E5%A3%B6%E9%97%AE%E9%A2%98%EF%BC%88%E8%A3%B4%E8%9C%80%E5%AE%9A%E7%90%86%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%89/" title="水壶问题（裴蜀定理的应用）">https://lihaoran0219.github.io/2020/03/21/水壶问题（裴蜀定理的应用）/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -337,13 +348,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/lihaoran0219.github.io/2020/03/19/hexo%E5%8D%9A%E5%AE%A2%E5%A2%9E%E5%8A%A0%E8%AF%84%E8%AE%BA%E7%95%99%E8%A8%80%E5%8A%9F%E8%83%BD/" rel="prev" title="hexo博客增加评论留言功能">
-      <i class="fa fa-chevron-left"></i> hexo博客增加评论留言功能
+    <a href="/lihaoran0219.github.io/2020/03/20/topK%E9%97%AE%E9%A2%98%E7%9A%84%E4%B8%A4%E7%A7%8D%E7%BB%8F%E5%85%B8%E8%A7%A3%E6%B3%95/" rel="prev" title="topK问题的两种经典解法">
+      <i class="fa fa-chevron-left"></i> topK问题的两种经典解法
     </a></div>
-      <div class="post-nav-item">
-    <a href="/lihaoran0219.github.io/2020/03/19/264-%E7%AC%ACN%E4%B8%AA%E4%B8%91%E6%95%B0/" rel="next" title="264.第N个丑数">
-      264.第N个丑数 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -404,7 +412,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#题目描述"><span class="nav-number">1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解题思路"><span class="nav-number">2.</span> <span class="nav-text">解题思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码"><span class="nav-number">3.</span> <span class="nav-text">代码</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题-描述"><span class="nav-number">1.</span> <span class="nav-text">问题 描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解题思路"><span class="nav-number">2.</span> <span class="nav-text">解题思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码"><span class="nav-number">3.</span> <span class="nav-text">代码</span></a></li></ol></div>
       </div>
       <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1353428173&auto=1&height=66"></iframe>
       <!--/noindex-->
