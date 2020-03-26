@@ -1,6 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>523.连续的子数组和</title>
+    <url>/lihaoran0219.github.io/2020/03/26/%E8%BF%9E%E7%BB%AD%E5%AD%90%E6%95%B0%E7%BB%84%E7%9A%84%E5%92%8C/</url>
+    <content><![CDATA[<h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>给定一个包含非负数的数组和一个目标整数 k，编写一个函数来判断该数组是否含有连续的子数组，其大小至少为 2，总和为 k 的倍数，即总和为 n*k，其中 n 也是一个整数。</p>
+<p>示例 1:</p>
+<pre><code>输入: [23,2,4,6,7], k = 6
+输出: True
+解释: [2,4] 是一个大小为 2 的子数组，并且和为 6。</code></pre><p>示例 2:</p>
+<pre><code>输入: [23,2,6,4,7], k = 6
+输出: True
+解释: [23,2,6,4,7]是大小为 5 的子数组，并且和为 42。</code></pre><p>说明:</p>
+<p>数组的长度不会超过10,000。</p>
+<p>你可以认为所有数字总和在 32 位有符号整数范围内。</p>
+<a id="more"></a>
+<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><h4 id="方法一-前缀和数组（O-N-2-）"><a href="#方法一-前缀和数组（O-N-2-）" class="headerlink" title="方法一 前缀和数组（O(N^2)）"></a>方法一 前缀和数组（O(N^2)）</h4><pre><code>pre数组存放原数组的前缀和，即pre[i]表示原数组的前i个元素的和
+
+枚举每一个子数组（元素个数大于1），判断和是否是k的倍数
+
+其中nums[i] ~ nums[j]这一子数组的和为pre[j] - pre[i - 1]</code></pre><h5 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h5> <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">checkSubarraySum</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">           <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; nums.length; i++)&#123;<span class="comment">//修改原数组化为前缀和数组，即nums[i]表示前i位之和</span></span><br><span class="line">               nums[i] += nums[i - <span class="number">1</span>];</span><br><span class="line">               <span class="keyword">if</span>(check(nums[i], k))</span><br><span class="line">                   <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">           &#125;</span><br><span class="line">           <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length - <span class="number">2</span>; i++)&#123; <span class="comment">//枚举nums[i] ~ nums[j]之和，判断是否是k的倍数</span></span><br><span class="line">               <span class="keyword">for</span>(<span class="keyword">int</span> j = i + <span class="number">2</span>; j &lt; nums.length; j++)&#123; <span class="comment">//第i位到第j位之和在前缀和数组中为nums[j] - nums[i - 1];</span></span><br><span class="line">                   <span class="keyword">if</span>(check(nums[j] - nums[i], k))</span><br><span class="line">                       <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">           <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">       &#125;</span><br><span class="line">   </span><br><span class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">check</span><span class="params">(<span class="keyword">int</span> num, <span class="keyword">int</span> k)</span></span>&#123; <span class="comment">//判断num是否为k的倍数</span></span><br><span class="line">           <span class="keyword">return</span> k == <span class="number">0</span> ? num == k : num % k == <span class="number">0</span>;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="方法二-HashMap优化的前缀和数组-O-N"><a href="#方法二-HashMap优化的前缀和数组-O-N" class="headerlink" title="方法二 HashMap优化的前缀和数组(O(N))"></a>方法二 HashMap优化的前缀和数组(O(N))</h4><pre><code>和方法一类似，方法二不同在于用HashMap存储前缀和，并且每次存储时都将结果对k取余
+
+结果以 (前i位之和sum % k -- i)键值对的形式存储
+
+遍历数组，如果key不存在，则加入哈希表，如果存在，说明存在子数组和为k的倍数
+
+原理：
+     因为每一个key都是前缀和对k取余的结果
+
+     所以当遇到相同的key时，说明之间的差值一定是k的倍数,即：
+        若
+          m % k = a
+          (m + n) % k = a
+        则 n % k = 0
+     由此可得出：
+        前j项之和对k取余的结果 == 前i项之和对k取余的结果（j &gt; i)时
+        nums[i + 1] ~ nums[j]这一段子数组的和是k的倍数（j - i &gt; 1）</code></pre><h5 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h5><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">       解法2：HashMap优化前缀和数组</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">checkSubarraySum</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">           Map&lt;Integer, Integer&gt;  map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">           map.put(<span class="number">0</span>, -<span class="number">1</span>);<span class="comment">//防止出现&#123;0，0&#125;，k=0的情况</span></span><br><span class="line">           <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">           <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">               sum += nums[i];</span><br><span class="line">               <span class="keyword">if</span>(k != <span class="number">0</span>)</span><br><span class="line">                   sum %= k;  <span class="comment">//每次存前i位的和对k的余数</span></span><br><span class="line">               <span class="keyword">if</span>(!map.containsKey(sum))</span><br><span class="line">                   map.put(sum, i);</span><br><span class="line">               <span class="keyword">else</span>&#123;</span><br><span class="line">                   <span class="keyword">if</span>(i - map.get(sum) &gt; <span class="number">1</span>)  <span class="comment">//必须是两个及以上元素之和</span></span><br><span class="line">                       <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">           <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">   </span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>LettCode刷题</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>779.第K个语法符号</title>
+    <url>/lihaoran0219.github.io/2020/03/23/779.%E7%AC%ACK%E4%B8%AA%E8%AF%AD%E6%B3%95%E7%AC%A6%E5%8F%B7/</url>
+    <content><![CDATA[<h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>在第一行我们写上一个 0。接下来的每一行，将前一行中的0替换为01，1替换为10。</p>
+<p>给定行数 N 和序数 K，返回第 N 行中第 K个字符。（K从1开始）</p>
+<p>例子:</p>
+<pre><code>输入: N = 1, K = 1
+输出: 0
+
+输入: N = 2, K = 1
+输出: 0
+
+输入: N = 2, K = 2
+输出: 1
+
+输入: N = 4, K = 5
+输出: 1
+
+解释:
+第一行: 0
+第二行: 01
+第三行: 0110
+第四行: 01101001</code></pre><p>注意：</p>
+<p>N 的范围 [1, 30].<br>K 的范围 [1, 2^(N-1)].</p>
+<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>我们可以多写几行数据，不难发现规律：</p>
+<p>第N行有 2^(N-1) 个字符，且前一半和上一行的字符相同，后一半是对前一半的每个字符取反（0变1，1变0）</p>
+<p>这样我们可以对要找的某一个字符追根溯源，找到他是从哪个字符变化而来的，这一过程用递归或迭代很容易完成</p>
+<p>例如：</p>
+<p>第5行的数据为： 01101001 10010110 </p>
+<p>若N = 5, K = 14</p>
+<p>解答过程：</p>
+<pre><code>N = 5:    K = 14 &gt; 8,在后一半，是由前一半的第6个数取反而来,而第6个数又是由第第4行得来
+
+N = 4: K = 6 &gt; 4,在后一半，是由前一半的第2个数取反而来，而第2个数又是由第3行得来
+
+N = 3: K = 2 &lt;= 2,在前一半，是由第2行的第2个数得来
+
+N = 2: K = 2 &gt; 1,在后一半，是由前一半的第1个数取反而来，而第1个数又是由第1行得来（第一行为0）
+
+结束，过程中共取反3次，即是由0取反3次得来，所以结果为1</code></pre><h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">kthGrammar</span><span class="params">(<span class="keyword">int</span> N, <span class="keyword">int</span> K)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> cnt = <span class="number">0</span>; <span class="comment">//记录取反的次数</span></span><br><span class="line">        <span class="keyword">while</span>(N &gt; <span class="number">1</span>)&#123;</span><br><span class="line">            <span class="keyword">int</span> mid = (<span class="keyword">int</span>)Math.pow(<span class="number">2</span>, N - <span class="number">2</span>);</span><br><span class="line">            <span class="keyword">if</span>(K &gt; mid)&#123;<span class="comment">//在这一行的后一半，说明是由前一半的第K - mid个数取反而来</span></span><br><span class="line">                cnt++;</span><br><span class="line">                K -= mid;</span><br><span class="line">            &#125;</span><br><span class="line">            N--;  </span><br><span class="line">               </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> cnt % <span class="number">2</span> == <span class="number">0</span> ? <span class="number">0</span> : <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>LettCode刷题</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>快慢指针之链表中间节点</title>
     <url>/lihaoran0219.github.io/2020/03/23/%E5%BF%AB%E6%85%A2%E6%8C%87%E9%92%88%E4%B9%8B%E9%93%BE%E8%A1%A8%E4%B8%AD%E9%97%B4%E8%8A%82%E7%82%B9/</url>
     <content><![CDATA[<h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>给定一个带有头结点 head 的非空单链表，返回链表的中间结点。</p>
