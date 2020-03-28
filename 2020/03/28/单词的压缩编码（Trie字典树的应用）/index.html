@@ -20,20 +20,22 @@
     var CONFIG = {"hostname":"lihaoran0219.github.io","root":"/lihaoran0219.github.io/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"W9LZ4822YC","apiKey":"c2a37549a8b51684877fcff78cf0d514","indexName":"MyBlog","hits":{"per_page":10},"labels":{"input_placeholder":"输入关键词进行搜索","hits_empty":"找不到关于“${query}”的文章","hits_stats":"共找到 ${hits}篇文章，耗时 ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="题目描述在第一行我们写上一个 0。接下来的每一行，将前一行中的0替换为01，1替换为10。 给定行数 N 和序数 K，返回第 N 行中第 K个字符。（K从1开始） 例子: 输入: N &#x3D; 1, K &#x3D; 1 输出: 0  输入: N &#x3D; 2, K &#x3D; 1 输出: 0  输入: N &#x3D; 2, K &#x3D; 2 输出: 1  输入: N &#x3D; 4, K &#x3D; 5 输出: 1  解释: 第一行: 0 第二行: 01">
+  <meta name="description" content="题目描述给定一个单词列表，我们将这个列表编码成一个索引字符串 S 与一个索引列表 A。 例如，如果这个列表是 [“time”, “me”, “bell”]，我们就可以将其表示为 S &#x3D; “time#bell#” 和 indexes &#x3D; [0, 2, 5]。 对于每一个索引，我们可以通过从字符串 S 中索引的位置开始读取字符串，直到 “#” 结束，来恢复我们之前的单词列表。 那么成功对给定单词列表进">
 <meta property="og:type" content="article">
-<meta property="og:title" content="779.第K个语法符号">
-<meta property="og:url" content="https://lihaoran0219.github.io/2020/03/23/779.%E7%AC%ACK%E4%B8%AA%E8%AF%AD%E6%B3%95%E7%AC%A6%E5%8F%B7/index.html">
+<meta property="og:title" content="单词的压缩编码（Trie字典树的应用）">
+<meta property="og:url" content="https://lihaoran0219.github.io/2020/03/28/%E5%8D%95%E8%AF%8D%E7%9A%84%E5%8E%8B%E7%BC%A9%E7%BC%96%E7%A0%81%EF%BC%88Trie%E5%AD%97%E5%85%B8%E6%A0%91%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%89/index.html">
 <meta property="og:site_name" content="李浩冉的博客">
-<meta property="og:description" content="题目描述在第一行我们写上一个 0。接下来的每一行，将前一行中的0替换为01，1替换为10。 给定行数 N 和序数 K，返回第 N 行中第 K个字符。（K从1开始） 例子: 输入: N &#x3D; 1, K &#x3D; 1 输出: 0  输入: N &#x3D; 2, K &#x3D; 1 输出: 0  输入: N &#x3D; 2, K &#x3D; 2 输出: 1  输入: N &#x3D; 4, K &#x3D; 5 输出: 1  解释: 第一行: 0 第二行: 01">
+<meta property="og:description" content="题目描述给定一个单词列表，我们将这个列表编码成一个索引字符串 S 与一个索引列表 A。 例如，如果这个列表是 [“time”, “me”, “bell”]，我们就可以将其表示为 S &#x3D; “time#bell#” 和 indexes &#x3D; [0, 2, 5]。 对于每一个索引，我们可以通过从字符串 S 中索引的位置开始读取字符串，直到 “#” 结束，来恢复我们之前的单词列表。 那么成功对给定单词列表进">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-03-23T08:39:28.000Z">
-<meta property="article:modified_time" content="2020-03-28T05:16:34.481Z">
+<meta property="og:image" content="https://lihaoran0219.github.io/lihaoran0219.github.io/2020/03/28/%E5%8D%95%E8%AF%8D%E7%9A%84%E5%8E%8B%E7%BC%A9%E7%BC%96%E7%A0%81%EF%BC%88Trie%E5%AD%97%E5%85%B8%E6%A0%91%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%89/Trie.png">
+<meta property="article:published_time" content="2020-03-28T05:13:34.000Z">
+<meta property="article:modified_time" content="2020-03-28T06:00:39.403Z">
 <meta property="article:author" content="李浩冉">
 <meta property="article:tag" content="算法">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lihaoran0219.github.io/lihaoran0219.github.io/2020/03/28/%E5%8D%95%E8%AF%8D%E7%9A%84%E5%8E%8B%E7%BC%A9%E7%BC%96%E7%A0%81%EF%BC%88Trie%E5%AD%97%E5%85%B8%E6%A0%91%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%89/Trie.png">
 
-<link rel="canonical" href="https://lihaoran0219.github.io/2020/03/23/779.%E7%AC%ACK%E4%B8%AA%E8%AF%AD%E6%B3%95%E7%AC%A6%E5%8F%B7/">
+<link rel="canonical" href="https://lihaoran0219.github.io/2020/03/28/%E5%8D%95%E8%AF%8D%E7%9A%84%E5%8E%8B%E7%BC%A9%E7%BC%96%E7%A0%81%EF%BC%88Trie%E5%AD%97%E5%85%B8%E6%A0%91%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%89/">
 
 
 <script id="page-configurations">
@@ -45,7 +47,7 @@
   };
 </script>
 
-  <title>779.第K个语法符号 | 李浩冉的博客</title>
+  <title>单词的压缩编码（Trie字典树的应用） | 李浩冉的博客</title>
   
 
 
@@ -201,7 +203,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://lihaoran0219.github.io/2020/03/23/779.%E7%AC%ACK%E4%B8%AA%E8%AF%AD%E6%B3%95%E7%AC%A6%E5%8F%B7/">
+    <link itemprop="mainEntityOfPage" href="https://lihaoran0219.github.io/2020/03/28/%E5%8D%95%E8%AF%8D%E7%9A%84%E5%8E%8B%E7%BC%A9%E7%BC%96%E7%A0%81%EF%BC%88Trie%E5%AD%97%E5%85%B8%E6%A0%91%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%89/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/lihaoran0219.github.io/images/avatar.gif">
@@ -214,7 +216,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          779.第K个语法符号
+          单词的压缩编码（Trie字典树的应用）
         </h1>
 
         <div class="post-meta">
@@ -223,16 +225,10 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2020-03-23 16:39:28" itemprop="dateCreated datePublished" datetime="2020-03-23T16:39:28+08:00">2020-03-23</time>
+              <time title="创建时间：2020-03-28 13:13:34 / 修改时间：14:00:39" itemprop="dateCreated datePublished" datetime="2020-03-28T13:13:34+08:00">2020-03-28</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-28 13:16:34" itemprop="dateModified" datetime="2020-03-28T13:16:34+08:00">2020-03-28</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -244,7 +240,7 @@
             </span>
 
           
-            <span id="/lihaoran0219.github.io/2020/03/23/779.%E7%AC%ACK%E4%B8%AA%E8%AF%AD%E6%B3%95%E7%AC%A6%E5%8F%B7/" class="post-meta-item leancloud_visitors" data-flag-title="779.第K个语法符号" title="阅读次数">
+            <span id="/lihaoran0219.github.io/2020/03/28/%E5%8D%95%E8%AF%8D%E7%9A%84%E5%8E%8B%E7%BC%A9%E7%BC%96%E7%A0%81%EF%BC%88Trie%E5%AD%97%E5%85%B8%E6%A0%91%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%89/" class="post-meta-item leancloud_visitors" data-flag-title="单词的压缩编码（Trie字典树的应用）" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -266,8 +262,8 @@
       </span>
       <span class="post-meta-item-text">Valine：</span>
     
-    <a title="valine" href="/lihaoran0219.github.io/2020/03/23/779.%E7%AC%ACK%E4%B8%AA%E8%AF%AD%E6%B3%95%E7%AC%A6%E5%8F%B7/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/lihaoran0219.github.io/2020/03/23/779.%E7%AC%ACK%E4%B8%AA%E8%AF%AD%E6%B3%95%E7%AC%A6%E5%8F%B7/" itemprop="commentCount"></span>
+    <a title="valine" href="/lihaoran0219.github.io/2020/03/28/%E5%8D%95%E8%AF%8D%E7%9A%84%E5%8E%8B%E7%BC%A9%E7%BC%96%E7%A0%81%EF%BC%88Trie%E5%AD%97%E5%85%B8%E6%A0%91%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%89/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/lihaoran0219.github.io/2020/03/28/%E5%8D%95%E8%AF%8D%E7%9A%84%E5%8E%8B%E7%BC%A9%E7%BC%96%E7%A0%81%EF%BC%88Trie%E5%AD%97%E5%85%B8%E6%A0%91%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%89/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -282,44 +278,40 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>在第一行我们写上一个 0。接下来的每一行，将前一行中的0替换为01，1替换为10。</p>
-<p>给定行数 N 和序数 K，返回第 N 行中第 K个字符。（K从1开始）</p>
-<p>例子:</p>
-<pre><code>输入: N = 1, K = 1
-输出: 0
+        <h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>给定一个单词列表，我们将这个列表编码成一个索引字符串 S 与一个索引列表 A。</p>
+<p>例如，如果这个列表是 [“time”, “me”, “bell”]，我们就可以将其表示为 S = “time#bell#” 和 indexes = [0, 2, 5]。</p>
+<p>对于每一个索引，我们可以通过从字符串 S 中索引的位置开始读取字符串，直到 “#” 结束，来恢复我们之前的单词列表。</p>
+<p>那么成功对给定单词列表进行编码的最小字符串长度是多少呢？</p>
+<p>示例：</p>
+<pre><code>输入: words = [&quot;time&quot;, &quot;me&quot;, &quot;bell&quot;]
+输出: 10
+说明: S = &quot;time#bell#&quot; ， indexes = [0, 2, 5] 。</code></pre><p>提示：</p>
+<pre><code>1 &lt;= words.length &lt;= 2000
+1 &lt;= words[i].length &lt;= 7
+每个单词都是小写字母 。</code></pre><a id="more"></a>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>根据示例，将”time”, “me”, “bell”三个单词变成了”time#bell#”</p>
+<p>我们可以发现indexes = [0, 2, 5]是3个单词在压缩后的字符串中的起始索引</p>
+<p>那么我们可以判断一个字符串是否是另一个字符串的后缀（如me是time的后缀，则被舍弃）</p>
+<p>这样的话很容易想到了字典树（前缀树），这里先来看看：</p>
+<p>假设有8个单词”A”, “to”, “tea”, “ted”, “ten”, “i”, “in”, “inn”</p>
+<p>他们在前缀树中是这样存储的：</p>
+<p><img src="/lihaoran0219.github.io/2020/03/28/%E5%8D%95%E8%AF%8D%E7%9A%84%E5%8E%8B%E7%BC%A9%E7%BC%96%E7%A0%81%EF%BC%88Trie%E5%AD%97%E5%85%B8%E6%A0%91%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%89/Trie.png" alt="图片来自LettCode"></p>
+<p>前缀树的结点定义：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">TrieNode</span></span>&#123;</span><br><span class="line">            <span class="keyword">char</span> value;</span><br><span class="line">            TrieNode[] children = <span class="keyword">new</span> TrieNode[<span class="number">26</span>];</span><br><span class="line"></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="title">TrieNode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="title">TrieNode</span><span class="params">(<span class="keyword">char</span> value)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">this</span>.value = value;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<p>插入操作</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">insert</span><span class="params">(String word)</span> </span>&#123;</span><br><span class="line">    TrieNode cur = root;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; word.length(); i++) &#123;</span><br><span class="line">        <span class="keyword">char</span> c = word.charAt(i);</span><br><span class="line">        <span class="keyword">if</span> (cur.children[c - <span class="string">'a'</span>] == <span class="keyword">null</span>) &#123;</span><br><span class="line">            cur.children[c - <span class="string">'a'</span>] = <span class="keyword">new</span> TrieNode(c);</span><br><span class="line">        &#125;</span><br><span class="line">        cur = cur.children[c - <span class="string">'a'</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-输入: N = 2, K = 1
-输出: 0
+<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>根据字典树的特性，我们可以将每一个字符串逆序存入树中</p>
+<p>逆序是为了判断掉当前单词是否是某一个单词的后缀</p>
+<p>还需要注意：插入时字符串长度长的要先插入</p>
+<p>如time和me,如果先插入me，那么两个单词都可完成插入操作，无法正确判断</p>
+<p>基于此，只需要对插入操作的代码稍作改动即可</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">Trie</span></span>&#123;</span><br><span class="line">        TrieNode root;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Trie</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            root = <span class="keyword">new</span> TrieNode();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">insert</span><span class="params">(String word)</span></span>&#123;</span><br><span class="line">            TrieNode cur = root;</span><br><span class="line">            <span class="keyword">char</span>[] chars = word.toCharArray();</span><br><span class="line">            <span class="keyword">boolean</span> flag = <span class="keyword">false</span>;<span class="comment">//标记是否插入字符</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = chars.length - <span class="number">1</span>; i&gt;= <span class="number">0</span>; i--) &#123;<span class="comment">//字符串逆序存储，这样的目的是如果某个单词是别的单词的后缀，那么就不会执行插入操作</span></span><br><span class="line">                <span class="keyword">int</span> index = chars[i] - <span class="string">'a'</span>;</span><br><span class="line">                <span class="keyword">if</span>(cur.children[index] == <span class="keyword">null</span>)&#123;</span><br><span class="line">                    cur.children[index] = <span class="keyword">new</span> TrieNode(chars[i]);</span><br><span class="line">                    flag = <span class="keyword">true</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                cur = cur.children[index];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> flag ? word.length() + <span class="number">1</span> : <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">TrieNode</span></span>&#123;</span><br><span class="line">            <span class="keyword">char</span> value;</span><br><span class="line">            TrieNode[] children = <span class="keyword">new</span> TrieNode[<span class="number">26</span>];</span><br><span class="line"></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="title">TrieNode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="title">TrieNode</span><span class="params">(<span class="keyword">char</span> value)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">this</span>.value = value;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minimumLengthEncoding</span><span class="params">(String[] words)</span> </span>&#123;</span><br><span class="line">        Trie root = <span class="keyword">new</span> Trie();</span><br><span class="line">        <span class="keyword">int</span> sumLen = <span class="number">0</span>;</span><br><span class="line">        Arrays.sort(words, (s1, s2) -&gt; s2.length() - s1.length());<span class="comment">//根据字符串的长度降序排序（这里用jdk8的lambda表达式）</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; words.length; i++) &#123;</span><br><span class="line">            sumLen += root.insert(words[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> sumLen;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 
-输入: N = 2, K = 2
-输出: 1
 
-输入: N = 4, K = 5
-输出: 1
 
-解释:
-第一行: 0
-第二行: 01
-第三行: 0110
-第四行: 01101001</code></pre><p>注意：</p>
-<p>N 的范围 [1, 30].<br>K 的范围 [1, 2^(N-1)].</p>
-<a id="more"></a>
-<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>我们可以多写几行数据，不难发现规律：</p>
-<p>第N行有 2^(N-1) 个字符，且前一半和上一行的字符相同，后一半是对前一半的每个字符取反（0变1，1变0）</p>
-<p>这样我们可以对要找的某一个字符追根溯源，找到他是从哪个字符变化而来的，这一过程用递归或迭代很容易完成</p>
-<p>例如：</p>
-<p>第5行的数据为： 01101001 10010110 </p>
-<p>若N = 5, K = 14</p>
-<p>解答过程：</p>
-<pre><code>N = 5:    K = 14 &gt; 8,在后一半，是由前一半的第6个数取反而来,而第6个数又是由第第4行得来
 
-N = 4: K = 6 &gt; 4,在后一半，是由前一半的第2个数取反而来，而第2个数又是由第3行得来
 
-N = 3: K = 2 &lt;= 2,在前一半，是由第2行的第2个数得来
-
-N = 2: K = 2 &gt; 1,在后一半，是由前一半的第1个数取反而来，而第1个数又是由第1行得来（第一行为0）
-
-结束，过程中共取反3次，即是由0取反3次得来，所以结果为1</code></pre><h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">kthGrammar</span><span class="params">(<span class="keyword">int</span> N, <span class="keyword">int</span> K)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> cnt = <span class="number">0</span>; <span class="comment">//记录取反的次数</span></span><br><span class="line">        <span class="keyword">while</span>(N &gt; <span class="number">1</span>)&#123;</span><br><span class="line">            <span class="keyword">int</span> mid = (<span class="keyword">int</span>)Math.pow(<span class="number">2</span>, N - <span class="number">2</span>);</span><br><span class="line">            <span class="keyword">if</span>(K &gt; mid)&#123;<span class="comment">//在这一行的后一半，说明是由前一半的第K - mid个数取反而来</span></span><br><span class="line">                cnt++;</span><br><span class="line">                K -= mid;</span><br><span class="line">            &#125;</span><br><span class="line">            N--;  </span><br><span class="line">               </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> cnt % <span class="number">2</span> == <span class="number">0</span> ? <span class="number">0</span> : <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -334,7 +326,7 @@ N = 2: K = 2 &gt; 1,在后一半，是由前一半的第1个数取反而来，�
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://lihaoran0219.github.io/2020/03/23/779.%E7%AC%ACK%E4%B8%AA%E8%AF%AD%E6%B3%95%E7%AC%A6%E5%8F%B7/" title="779.第K个语法符号">https://lihaoran0219.github.io/2020/03/23/779.第K个语法符号/</a>
+    <a href="https://lihaoran0219.github.io/2020/03/28/%E5%8D%95%E8%AF%8D%E7%9A%84%E5%8E%8B%E7%BC%A9%E7%BC%96%E7%A0%81%EF%BC%88Trie%E5%AD%97%E5%85%B8%E6%A0%91%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%89/" title="单词的压缩编码（Trie字典树的应用）">https://lihaoran0219.github.io/2020/03/28/单词的压缩编码（Trie字典树的应用）/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -363,13 +355,10 @@ N = 2: K = 2 &gt; 1,在后一半，是由前一半的第1个数取反而来，�
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/lihaoran0219.github.io/2020/03/23/%E5%BF%AB%E6%85%A2%E6%8C%87%E9%92%88%E4%B9%8B%E9%93%BE%E8%A1%A8%E4%B8%AD%E9%97%B4%E8%8A%82%E7%82%B9/" rel="prev" title="快慢指针之链表中间节点">
-      <i class="fa fa-chevron-left"></i> 快慢指针之链表中间节点
+    <a href="/lihaoran0219.github.io/2020/03/26/%E8%BF%9E%E7%BB%AD%E5%AD%90%E6%95%B0%E7%BB%84%E7%9A%84%E5%92%8C/" rel="prev" title="523.连续的子数组和">
+      <i class="fa fa-chevron-left"></i> 523.连续的子数组和
     </a></div>
-      <div class="post-nav-item">
-    <a href="/lihaoran0219.github.io/2020/03/26/%E8%BF%9E%E7%BB%AD%E5%AD%90%E6%95%B0%E7%BB%84%E7%9A%84%E5%92%8C/" rel="next" title="523.连续的子数组和">
-      523.连续的子数组和 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -430,7 +419,7 @@ N = 2: K = 2 &gt; 1,在后一半，是由前一半的第1个数取反而来，�
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#题目描述"><span class="nav-number">1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解题思路"><span class="nav-number">2.</span> <span class="nav-text">解题思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码"><span class="nav-number">3.</span> <span class="nav-text">代码</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#题目描述"><span class="nav-number">1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">2.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解题思路"><span class="nav-number">3.</span> <span class="nav-text">解题思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码"><span class="nav-number">4.</span> <span class="nav-text">代码</span></a></li></ol></div>
       </div>
       <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1353428173&auto=1&height=66"></iframe>
       <!--/noindex-->

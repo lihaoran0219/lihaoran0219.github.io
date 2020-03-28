@@ -1,6 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>单词的压缩编码（Trie字典树的应用）</title>
+    <url>/lihaoran0219.github.io/2020/03/28/%E5%8D%95%E8%AF%8D%E7%9A%84%E5%8E%8B%E7%BC%A9%E7%BC%96%E7%A0%81%EF%BC%88Trie%E5%AD%97%E5%85%B8%E6%A0%91%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%89/</url>
+    <content><![CDATA[<h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>给定一个单词列表，我们将这个列表编码成一个索引字符串 S 与一个索引列表 A。</p>
+<p>例如，如果这个列表是 [“time”, “me”, “bell”]，我们就可以将其表示为 S = “time#bell#” 和 indexes = [0, 2, 5]。</p>
+<p>对于每一个索引，我们可以通过从字符串 S 中索引的位置开始读取字符串，直到 “#” 结束，来恢复我们之前的单词列表。</p>
+<p>那么成功对给定单词列表进行编码的最小字符串长度是多少呢？</p>
+<p>示例：</p>
+<pre><code>输入: words = [&quot;time&quot;, &quot;me&quot;, &quot;bell&quot;]
+输出: 10
+说明: S = &quot;time#bell#&quot; ， indexes = [0, 2, 5] 。</code></pre><p>提示：</p>
+<pre><code>1 &lt;= words.length &lt;= 2000
+1 &lt;= words[i].length &lt;= 7
+每个单词都是小写字母 。</code></pre><a id="more"></a>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>根据示例，将”time”, “me”, “bell”三个单词变成了”time#bell#”</p>
+<p>我们可以发现indexes = [0, 2, 5]是3个单词在压缩后的字符串中的起始索引</p>
+<p>那么我们可以判断一个字符串是否是另一个字符串的后缀（如me是time的后缀，则被舍弃）</p>
+<p>这样的话很容易想到了字典树（前缀树），这里先来看看：</p>
+<p>假设有8个单词”A”, “to”, “tea”, “ted”, “ten”, “i”, “in”, “inn”</p>
+<p>他们在前缀树中是这样存储的：</p>
+<p><img src="/lihaoran0219.github.io/2020/03/28/%E5%8D%95%E8%AF%8D%E7%9A%84%E5%8E%8B%E7%BC%A9%E7%BC%96%E7%A0%81%EF%BC%88Trie%E5%AD%97%E5%85%B8%E6%A0%91%E7%9A%84%E5%BA%94%E7%94%A8%EF%BC%89/Trie.png" alt="图片来自LettCode"></p>
+<p>前缀树的结点定义：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">TrieNode</span></span>&#123;</span><br><span class="line">            <span class="keyword">char</span> value;</span><br><span class="line">            TrieNode[] children = <span class="keyword">new</span> TrieNode[<span class="number">26</span>];</span><br><span class="line"></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="title">TrieNode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="title">TrieNode</span><span class="params">(<span class="keyword">char</span> value)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">this</span>.value = value;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<p>插入操作</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">insert</span><span class="params">(String word)</span> </span>&#123;</span><br><span class="line">    TrieNode cur = root;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; word.length(); i++) &#123;</span><br><span class="line">        <span class="keyword">char</span> c = word.charAt(i);</span><br><span class="line">        <span class="keyword">if</span> (cur.children[c - <span class="string">'a'</span>] == <span class="keyword">null</span>) &#123;</span><br><span class="line">            cur.children[c - <span class="string">'a'</span>] = <span class="keyword">new</span> TrieNode(c);</span><br><span class="line">        &#125;</span><br><span class="line">        cur = cur.children[c - <span class="string">'a'</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>根据字典树的特性，我们可以将每一个字符串逆序存入树中</p>
+<p>逆序是为了判断掉当前单词是否是某一个单词的后缀</p>
+<p>还需要注意：插入时字符串长度长的要先插入</p>
+<p>如time和me,如果先插入me，那么两个单词都可完成插入操作，无法正确判断</p>
+<p>基于此，只需要对插入操作的代码稍作改动即可</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">Trie</span></span>&#123;</span><br><span class="line">        TrieNode root;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Trie</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            root = <span class="keyword">new</span> TrieNode();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">insert</span><span class="params">(String word)</span></span>&#123;</span><br><span class="line">            TrieNode cur = root;</span><br><span class="line">            <span class="keyword">char</span>[] chars = word.toCharArray();</span><br><span class="line">            <span class="keyword">boolean</span> flag = <span class="keyword">false</span>;<span class="comment">//标记是否插入字符</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = chars.length - <span class="number">1</span>; i&gt;= <span class="number">0</span>; i--) &#123;<span class="comment">//字符串逆序存储，这样的目的是如果某个单词是别的单词的后缀，那么就不会执行插入操作</span></span><br><span class="line">                <span class="keyword">int</span> index = chars[i] - <span class="string">'a'</span>;</span><br><span class="line">                <span class="keyword">if</span>(cur.children[index] == <span class="keyword">null</span>)&#123;</span><br><span class="line">                    cur.children[index] = <span class="keyword">new</span> TrieNode(chars[i]);</span><br><span class="line">                    flag = <span class="keyword">true</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                cur = cur.children[index];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> flag ? word.length() + <span class="number">1</span> : <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">TrieNode</span></span>&#123;</span><br><span class="line">            <span class="keyword">char</span> value;</span><br><span class="line">            TrieNode[] children = <span class="keyword">new</span> TrieNode[<span class="number">26</span>];</span><br><span class="line"></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="title">TrieNode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="title">TrieNode</span><span class="params">(<span class="keyword">char</span> value)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">this</span>.value = value;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minimumLengthEncoding</span><span class="params">(String[] words)</span> </span>&#123;</span><br><span class="line">        Trie root = <span class="keyword">new</span> Trie();</span><br><span class="line">        <span class="keyword">int</span> sumLen = <span class="number">0</span>;</span><br><span class="line">        Arrays.sort(words, (s1, s2) -&gt; s2.length() - s1.length());<span class="comment">//根据字符串的长度降序排序（这里用jdk8的lambda表达式）</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; words.length; i++) &#123;</span><br><span class="line">            sumLen += root.insert(words[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> sumLen;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+]]></content>
+      <categories>
+        <category>LettCode刷题</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>523.连续的子数组和</title>
     <url>/lihaoran0219.github.io/2020/03/26/%E8%BF%9E%E7%BB%AD%E5%AD%90%E6%95%B0%E7%BB%84%E7%9A%84%E5%92%8C/</url>
     <content><![CDATA[<h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>给定一个包含非负数的数组和一个目标整数 k，编写一个函数来判断该数组是否含有连续的子数组，其大小至少为 2，总和为 k 的倍数，即总和为 n*k，其中 n 也是一个整数。</p>
@@ -67,6 +111,7 @@
 第三行: 0110
 第四行: 01101001</code></pre><p>注意：</p>
 <p>N 的范围 [1, 30].<br>K 的范围 [1, 2^(N-1)].</p>
+<a id="more"></a>
 <h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>我们可以多写几行数据，不难发现规律：</p>
 <p>第N行有 2^(N-1) 个字符，且前一半和上一行的字符相同，后一半是对前一半的每个字符取反（0变1，1变0）</p>
 <p>这样我们可以对要找的某一个字符追根溯源，找到他是从哪个字符变化而来的，这一过程用递归或迭代很容易完成</p>
@@ -294,6 +339,26 @@ f(n) = n             n是质数</code></pre><h3 id="代码"><a href="#代码" cl
       </tags>
   </entry>
   <entry>
+    <title>hexo博客增加评论留言功能</title>
+    <url>/lihaoran0219.github.io/2020/03/19/hexo%E5%8D%9A%E5%AE%A2%E5%A2%9E%E5%8A%A0%E8%AF%84%E8%AE%BA%E7%95%99%E8%A8%80%E5%8A%9F%E8%83%BD/</url>
+    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近用hexo搭建了一个博客，这是一个用来生成静态博客的开源框架，要想开启评论功能，我们在这里借助后端云平台LeanCloud</p>
+<p>nexT主题集成了很多评论插件，这里采用Valine</p>
+<a id="more"></a>
+
+<h3 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h3><h4 id="1-前往LeanCloud官网注册账号"><a href="#1-前往LeanCloud官网注册账号" class="headerlink" title="1.前往LeanCloud官网注册账号"></a>1.前往<a href="https://leancloud.cn" target="_blank" rel="noopener">LeanCloud官网</a>注册账号</h4><h4 id="2-创建应用"><a href="#2-创建应用" class="headerlink" title="2.创建应用"></a>2.创建应用</h4><p><img src="/lihaoran0219.github.io/2020/03/19/hexo%E5%8D%9A%E5%AE%A2%E5%A2%9E%E5%8A%A0%E8%AF%84%E8%AE%BA%E7%95%99%E8%A8%80%E5%8A%9F%E8%83%BD/new.jpg" alt></p>
+<h4 id="3-进入应用→设置→应用key-获取你的appid和appkey"><a href="#3-进入应用→设置→应用key-获取你的appid和appkey" class="headerlink" title="3.进入应用→设置→应用key 获取你的appid和appkey"></a>3.进入应用→设置→应用key 获取你的appid和appkey</h4><p><img src="/lihaoran0219.github.io/2020/03/19/hexo%E5%8D%9A%E5%AE%A2%E5%A2%9E%E5%8A%A0%E8%AF%84%E8%AE%BA%E7%95%99%E8%A8%80%E5%8A%9F%E8%83%BD/keys.jpg" alt></p>
+<h4 id="4-打开主题配置文件（blog-themes-next-config-yml）"><a href="#4-打开主题配置文件（blog-themes-next-config-yml）" class="headerlink" title="4.打开主题配置文件（blog/themes/next/_config.yml）"></a>4.打开主题配置文件（blog/themes/next/_config.yml）</h4><pre><code>* 搜索valine
+* 将enable设置为true
+* 将获取的id填入相应的位置</code></pre><p><img src="/lihaoran0219.github.io/2020/03/19/hexo%E5%8D%9A%E5%AE%A2%E5%A2%9E%E5%8A%A0%E8%AF%84%E8%AE%BA%E7%95%99%E8%A8%80%E5%8A%9F%E8%83%BD/valine.jpg" alt></p>
+<h4 id="大功告成啦！！！"><a href="#大功告成啦！！！" class="headerlink" title="大功告成啦！！！"></a>大功告成啦！！！</h4>]]></content>
+      <categories>
+        <category>blog</category>
+      </categories>
+      <tags>
+        <tag>blog</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>409. 最长回文串</title>
     <url>/lihaoran0219.github.io/2020/03/19/409-%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E4%B8%B2/</url>
     <content><![CDATA[<h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>给定一个包含大写字母和小写字母的字符串，找到通过这些字母构造成的最长的回文串。</p>
@@ -319,26 +384,6 @@ f(n) = n             n是质数</code></pre><h3 id="代码"><a href="#代码" cl
       </categories>
       <tags>
         <tag>算法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>hexo博客增加评论留言功能</title>
-    <url>/lihaoran0219.github.io/2020/03/19/hexo%E5%8D%9A%E5%AE%A2%E5%A2%9E%E5%8A%A0%E8%AF%84%E8%AE%BA%E7%95%99%E8%A8%80%E5%8A%9F%E8%83%BD/</url>
-    <content><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近用hexo搭建了一个博客，这是一个用来生成静态博客的开源框架，要想开启评论功能，我们在这里借助后端云平台LeanCloud</p>
-<p>nexT主题集成了很多评论插件，这里采用Valine</p>
-<a id="more"></a>
-
-<h3 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h3><h4 id="1-前往LeanCloud官网注册账号"><a href="#1-前往LeanCloud官网注册账号" class="headerlink" title="1.前往LeanCloud官网注册账号"></a>1.前往<a href="https://leancloud.cn" target="_blank" rel="noopener">LeanCloud官网</a>注册账号</h4><h4 id="2-创建应用"><a href="#2-创建应用" class="headerlink" title="2.创建应用"></a>2.创建应用</h4><p><img src="/lihaoran0219.github.io/2020/03/19/hexo%E5%8D%9A%E5%AE%A2%E5%A2%9E%E5%8A%A0%E8%AF%84%E8%AE%BA%E7%95%99%E8%A8%80%E5%8A%9F%E8%83%BD/new.jpg" alt></p>
-<h4 id="3-进入应用→设置→应用key-获取你的appid和appkey"><a href="#3-进入应用→设置→应用key-获取你的appid和appkey" class="headerlink" title="3.进入应用→设置→应用key 获取你的appid和appkey"></a>3.进入应用→设置→应用key 获取你的appid和appkey</h4><p><img src="/lihaoran0219.github.io/2020/03/19/hexo%E5%8D%9A%E5%AE%A2%E5%A2%9E%E5%8A%A0%E8%AF%84%E8%AE%BA%E7%95%99%E8%A8%80%E5%8A%9F%E8%83%BD/keys.jpg" alt></p>
-<h4 id="4-打开主题配置文件（blog-themes-next-config-yml）"><a href="#4-打开主题配置文件（blog-themes-next-config-yml）" class="headerlink" title="4.打开主题配置文件（blog/themes/next/_config.yml）"></a>4.打开主题配置文件（blog/themes/next/_config.yml）</h4><pre><code>* 搜索valine
-* 将enable设置为true
-* 将获取的id填入相应的位置</code></pre><p><img src="/lihaoran0219.github.io/2020/03/19/hexo%E5%8D%9A%E5%AE%A2%E5%A2%9E%E5%8A%A0%E8%AF%84%E8%AE%BA%E7%95%99%E8%A8%80%E5%8A%9F%E8%83%BD/valine.jpg" alt></p>
-<h4 id="大功告成啦！！！"><a href="#大功告成啦！！！" class="headerlink" title="大功告成啦！！！"></a>大功告成啦！！！</h4>]]></content>
-      <categories>
-        <category>blog</category>
-      </categories>
-      <tags>
-        <tag>blog</tag>
       </tags>
   </entry>
   <entry>
