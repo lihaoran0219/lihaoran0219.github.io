@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>动态规划和贪心+二分查找解决最长上升子序列问题</title>
+    <title>生命游戏（复合标志的使用）</title>
     <url>/lihaoran0219.github.io/2020/04/02/%E7%94%9F%E5%91%BD%E6%B8%B8%E6%88%8F/</url>
     <content><![CDATA[<h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>根据 百度百科 ，生命游戏，简称为生命，是英国数学家约翰·何顿·康威在 1970 年发明的细胞自动机。</p>
 <p>给定一个包含 m × n 个格子的面板，每一个格子都可以看成是一个细胞。</p>
