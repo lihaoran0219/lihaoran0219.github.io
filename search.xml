@@ -1,6 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>链表加法</title>
+    <url>/lihaoran0219.github.io/2020/04/14/%E9%93%BE%E8%A1%A8%E5%8A%A0%E6%B3%95/</url>
+    <content><![CDATA[<h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>给你两个 非空 链表来代表两个非负整数。数字最高位位于链表开始位置。它们的每个节点只存储一位数字。将这两数相加会返回一个新的链表。</p>
+<p>你可以假设除了数字 0 之外，这两个数字都不会以零开头。</p>
+<p>进阶：</p>
+<p>如果输入链表不能修改该如何处理？换句话说，你不能对列表中的节点进行翻转。</p>
+<p>示例：</p>
+<pre><code>输入：(7 -&gt; 2 -&gt; 4 -&gt; 3) + (5 -&gt; 6 -&gt; 4)
+输出：7 -&gt; 8 -&gt; 0 -&gt; 7</code></pre>  <a id="more"></a>
+<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>问题的关键在于链表的顺序和加法的顺序相反，我们要实现加法就要从链表的尾部开始</p>
+<p>先遍历到链表尾部再相加的办法的办法真是太过于朴素了</p>
+<p>其实对于逆序这一类问题我们应该首先想到的就是栈，利用栈很容易就将链表中的元素倒过来了</p>
+<pre><code>1.遍历两个链表，将元素入栈
+2.依次从两个栈中弹出栈顶元素相加
+3.每一位上的数字应该是加完的结果对10取余加上进位
+4.用头插法创建链表存储结果
+5.保存进位</code></pre><h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * public class ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode next;</span></span><br><span class="line"><span class="comment"> *     ListNode(int x) &#123; val = x; &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ListNode <span class="title">addTwoNumbers</span><span class="params">(ListNode l1, ListNode l2)</span> </span>&#123;</span><br><span class="line">        Stack&lt;Integer&gt; s1 = <span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line">        Stack&lt;Integer&gt; s2 = <span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line">        ListNode p = l1;</span><br><span class="line">        ListNode q = l2;</span><br><span class="line">        <span class="comment">/*将链表元素用栈保存*/</span></span><br><span class="line">        <span class="keyword">while</span>(p != <span class="keyword">null</span>)&#123;</span><br><span class="line">            s1.push(p.val);</span><br><span class="line">            p = p.next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span>(q != <span class="keyword">null</span>)&#123;</span><br><span class="line">            s2.push(q.val);</span><br><span class="line">            q = q.next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> carry = <span class="number">0</span>;</span><br><span class="line">        ListNode res = <span class="keyword">null</span>;</span><br><span class="line">        <span class="comment">/*分别弹出两个栈的栈顶元素相加*/</span></span><br><span class="line">        <span class="keyword">while</span>(!s1.isEmpty() || !s2.isEmpty() ||  carry &gt; <span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">int</span> sum = carry;</span><br><span class="line">            sum += s1.isEmpty() ? <span class="number">0</span> : s1.pop();</span><br><span class="line">            sum += s2.isEmpty() ? <span class="number">0</span> : s2.pop();</span><br><span class="line">            <span class="comment">/*头插法添加链表结点*/</span></span><br><span class="line">            ListNode node = <span class="keyword">new</span> ListNode(sum % <span class="number">10</span>);</span><br><span class="line">            node.next = res;</span><br><span class="line">            res = node;</span><br><span class="line">            carry = sum / <span class="number">10</span>;  <span class="comment">//存储进位</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>LeetCode刷题</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>航班预定统计</title>
+    <url>/lihaoran0219.github.io/2020/04/09/%E8%88%AA%E7%8F%AD%E9%A2%84%E5%AE%9A%E7%BB%9F%E8%AE%A1/</url>
+    <content><![CDATA[<h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>这里有 n 个航班，它们分别从 1 到 n 进行编号。</p>
+<p>我们这儿有一份航班预订表，表中第 i 条预订记录 bookings[i] = [i, j, k] 意味着我们在从 i 到 j 的每个航班上预订了 k 个座位。</p>
+<p>请你返回一个长度为 n 的数组 answer，按航班编号顺序返回每个航班上预订的座位数。</p>
+<p>示例：</p>
+<pre><code>输入：bookings = [[1,2,10],[2,3,20],[2,5,25]], n = 5
+输出：[10,55,45,25,25]</code></pre><p>提示：</p>
+<pre><code>1 &lt;= bookings.length &lt;= 20000
+1 &lt;= bookings[i][0] &lt;= bookings[i][1] &lt;= n &lt;= 20000
+1 &lt;= bookings[i][2] &lt;= 10000</code></pre> <a id="more"></a>
+<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><h4 id="1-暴力法"><a href="#1-暴力法" class="headerlink" title="1.暴力法"></a>1.暴力法</h4><p>外层循环遍历bookings数组</p>
+<p>内层循环从i到j，转下标用数组rec记录每个航班的预定数</p>
+<p>如[2, 5, 25]:</p>
+<pre><code>则rec[2] += 25, 
+rec[3] += 25, 
+rec[4] += 25, 
+rec[5] += 25</code></pre><p>####2.差分法</p>
+<p>解法1每次都要从i到j遍历一次，我们可以进行一下优化</p>
+<p>其实从i到j,每一个都加上k，这不就是等差数组嘛</p>
+<p>我们只需遍历一遍bookings,用一个数组记录公差d,最后等差公式an = a(n - 1) + d即可</p>
+<p>举个栗子：</p>
+<p>假设d[0] = 0,我们从d[1]开始</p>
+<p>[1, 2, 10]</p>
+<pre><code>航班1预定了10，则和d[0]的公差为10，d[1] = 10
+航班2预定了10，则比航班3多10，即2和3的公差为-10，d[3] = -10</code></pre><p>[2, 3, 20]</p>
+<pre><code>航班2和航班3预定了20
+航班2比航班1多了20，则1和2的公差为20， d[2] = 20
+航班3比航班4多了20，即3和4的公差为-20，d[4] = -20</code></pre><p>[2, 5, 25]</p>
+<pre><code>航班2， 3， 4， 5都预定了25
+航班2又比航班1多了25，则公差变成了原来的20再加上25，即d[2] += 25 = 45
+推算到此结束，因为2，3，4，5都加了25，他们之间不会再拉开差距</code></pre><p>至此，数组d = [0, 10, 45, -10, -20, 0]</p>
+<p>根据等差数列通项公式ans = [10, 55, 45, 25, 25]</p>
+<p>总结一下就是：</p>
+<pre><code>遍历到[i, j, k]时，d[i] += k, d[j + 1] -= k 
+最后再还原</code></pre><h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">   暴力法</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] corpFlightBookings(<span class="keyword">int</span>[][] bookings, <span class="keyword">int</span> n) &#123;</span><br><span class="line">        <span class="keyword">int</span>[] ans = <span class="keyword">new</span> <span class="keyword">int</span>[n];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span>[] arr : bookings)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = arr[<span class="number">0</span>]; i &lt;= arr[<span class="number">1</span>]; i++)</span><br><span class="line">                ans[i - <span class="number">1</span>] += arr[<span class="number">2</span>];</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    差分法</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] corpFlightBookings(<span class="keyword">int</span>[][] bookings, <span class="keyword">int</span> n) &#123;</span><br><span class="line">        <span class="keyword">int</span>[] d = <span class="keyword">new</span> <span class="keyword">int</span>[n];<span class="comment">//d[i]表示公差，即和前一个航班的的预定数差多少</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span>[] arr : bookings)&#123;</span><br><span class="line">            d[arr[<span class="number">0</span>] - <span class="number">1</span>] += arr[<span class="number">2</span>];</span><br><span class="line">            <span class="keyword">if</span>(arr[<span class="number">1</span>] &lt; n)</span><br><span class="line">                d[arr[<span class="number">1</span>]] -= arr[<span class="number">2</span>];</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; i++)</span><br><span class="line">            d[i] += d[i - <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">return</span> d;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>LeetCode刷题</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>原地旋转矩阵</title>
+    <url>/lihaoran0219.github.io/2020/04/07/%E5%8E%9F%E5%9C%B0%E6%97%8B%E8%BD%AC%E7%9F%A9%E9%98%B5/</url>
+    <content><![CDATA[<h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>给你一幅由 N × N 矩阵表示的图像，其中每个像素的大小为 4 字节。请你设计一种算法，将图像旋转 90 度。</p>
+<p>不占用额外内存空间能否做到？</p>
+<p>示例 1:</p>
+<pre><code>给定 matrix = 
+[
+  [1,2,3],
+  [4,5,6],
+  [7,8,9]
+],
+
+原地旋转输入矩阵，使其变为:
+[
+  [7,4,1],
+  [8,5,2],
+  [9,6,3]
+]</code></pre><p>示例 2:</p>
+<pre><code>给定 matrix =
+[
+  [ 5, 1, 9,11],
+  [ 2, 4, 8,10],
+  [13, 3, 6, 7],
+  [15,14,12,16]
+], 
+
+原地旋转输入矩阵，使其变为:
+[
+  [15,13, 2, 5],
+  [14, 3, 4, 1],
+  [12, 6, 8, 9],
+  [16, 7,10,11]
+]</code></pre><h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>题目意思很简单，就是将矩阵顺时针旋转90°</p>
+<p>这道题如果可以换成用辅助空间做那将绝杀，可是换不得</p>
+<p>如果要原地修改的话我们只要找到规律也是很简单的</p>
+<p>拿示例2举个栗子<br><img src="/lihaoran0219.github.io/2020/04/07/%E5%8E%9F%E5%9C%B0%E6%97%8B%E8%BD%AC%E7%9F%A9%E9%98%B5/matrix.png" alt></p>
+<p>根据上图，我们可以看出，旋转90°即将每一行竖过来</p>
+<p>即一个数原来在哪一列，旋转后就在哪一行，原来在哪一行，旋转后就在（总列数 - 原来的行数 - 1） 这一行</p>
+<p>如原来的第3行第1列的14，旋转后到了第1行第0列</p>
+<p>总结一下公式就是：arr[j][N - i - 1] = arr[i][j]</p>
+<p>根据这个公式，我们就可以获取所有数字旋转后的位置</p>
+<p>然而因为要原地，所以直接枚举的话原来的数据会被覆盖掉，所以换一个枚举策略</p>
+<p>我们将数组看作n层，如示例2可看作两层<br><img src="/lihaoran0219.github.io/2020/04/07/%E5%8E%9F%E5%9C%B0%E6%97%8B%E8%BD%AC%E7%9F%A9%E9%98%B5/exp.png" alt></p>
+<pre><code>我们从5开始，5要换到11的位置，在换之前先保存一下原来位置的数据（下同）
+
+然后从11开始，11换到16的位置
+
+然后从16开始，16换到15的位置
+
+然后从15开始，15换到5原来的位置
+
+这样一圈下来，就变成了下图所示</code></pre><p> <img src="/lihaoran0219.github.io/2020/04/07/%E5%8E%9F%E5%9C%B0%E6%97%8B%E8%BD%AC%E7%9F%A9%E9%98%B5/exp1.png" alt></p>
+<p>我们发现外面这一层只剩4个没有换位置，我们只需再从（1，0）的2开始再来一圈就可以将外层全部旋转</p>
+<p>外层旋转完毕之后用同样的操作旋转内圈</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n;</span><br><span class="line">    <span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">rotate</span><span class="params">(<span class="keyword">int</span>[][] matrix)</span> </span>&#123;</span><br><span class="line">       n = matrix.length;</span><br><span class="line">        <span class="keyword">int</span> j = <span class="number">0</span>;<span class="comment">//j为每一层的左上角第一个元素的纵坐标</span></span><br><span class="line">        <span class="keyword">int</span> temp = n;</span><br><span class="line">        <span class="keyword">while</span>(temp &gt;=  <span class="number">2</span>)&#123;  <span class="comment">//以层为单位来旋转</span></span><br><span class="line">           cnt = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = j; i &lt; j + temp - <span class="number">1</span>; i++)&#123;</span><br><span class="line">                update(matrix, i, j, matrix[i][j]);</span><br><span class="line">                cnt = <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            temp  -= <span class="number">2</span>;<span class="comment">//处理完一层后，下一层的行数会减2</span></span><br><span class="line">            j++;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">对每一个位置（i, j）,我们将他换到旋转后的位置，再将旋转到的位置的原来的元素旋转，重复4次即为一圈</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">(<span class="keyword">int</span>[][] matrix, <span class="keyword">int</span> i, <span class="keyword">int</span> j, <span class="keyword">int</span> value)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(cnt == <span class="number">4</span>)<span class="keyword">return</span>;</span><br><span class="line">        <span class="keyword">int</span> row = j;</span><br><span class="line">        <span class="keyword">int</span> col = n - i - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> temp = matrix[row][col]; <span class="comment">//保存原来位置的值，避免被覆盖掉</span></span><br><span class="line">        matrix[row][col] = value; </span><br><span class="line">        cnt++;</span><br><span class="line">        update(matrix, row, col, temp);<span class="comment">//旋转下一个位置</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>LeetCode刷题</category>
+      </categories>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>最短编辑距离问题</title>
     <url>/lihaoran0219.github.io/2020/04/06/%E6%9C%80%E7%9F%AD%E7%BC%96%E8%BE%91%E8%B7%9D%E7%A6%BB%E9%97%AE%E9%A2%98/</url>
     <content><![CDATA[<h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>给你两个单词 word1 和 word2，请你计算出将 word1 转换成 word2 所使用的最少操作数 。</p>
