@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"lihaoran0219.github.io","root":"/lihaoran0219.github.io/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"W9LZ4822YC","apiKey":"c2a37549a8b51684877fcff78cf0d514","indexName":"MyBlog","hits":{"per_page":10},"labels":{"input_placeholder":"输入关键词进行搜索","hits_empty":"找不到关于“${query}”的文章","hits_stats":"共找到 ${hits}篇文章，耗时 ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="概述12### 构造方法* &#96;&#96;&#96;File(File parent, String child) 从父抽象路径名和子路径名字符串创建新的 File实例。  File(String pathname)通过将给定的路径名字符串转换为抽象路径名来创建新的 File实例。 参数pathname为路径名称（字符串形式） 路径可以以文件结尾，也可以以文件夹结尾 路径可以存在，也可以不存">
+  <meta name="description" content="概述12### 构造方法* &#96;&#96;&#96;File(File parent, String child) 从父抽象路径名和子路径名字符串创建新的 File实例。    File(String pathname)通过将给定的路径名字符串转换为抽象路径名来创建新的 File实例。 参数pathname为路径名称（字符串形式） 路径可以以文件结尾，也可以以文件夹结尾 路径可以存在，也可以">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java File类">
 <meta property="og:url" content="https://lihaoran0219.github.io/2020/04/17/File%E7%B1%BB/index.html">
 <meta property="og:site_name" content="李浩冉的博客">
-<meta property="og:description" content="概述12### 构造方法* &#96;&#96;&#96;File(File parent, String child) 从父抽象路径名和子路径名字符串创建新的 File实例。  File(String pathname)通过将给定的路径名字符串转换为抽象路径名来创建新的 File实例。 参数pathname为路径名称（字符串形式） 路径可以以文件结尾，也可以以文件夹结尾 路径可以存在，也可以不存">
+<meta property="og:description" content="概述12### 构造方法* &#96;&#96;&#96;File(File parent, String child) 从父抽象路径名和子路径名字符串创建新的 File实例。    File(String pathname)通过将给定的路径名字符串转换为抽象路径名来创建新的 File实例。 参数pathname为路径名称（字符串形式） 路径可以以文件结尾，也可以以文件夹结尾 路径可以存在，也可以">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-04-17T09:53:38.000Z">
-<meta property="article:modified_time" content="2020-04-17T09:53:42.336Z">
+<meta property="article:modified_time" content="2020-04-17T11:13:04.590Z">
 <meta property="article:author" content="李浩冉">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
@@ -225,7 +225,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-04-17 17:53:38 / 修改时间：17:53:42" itemprop="dateCreated datePublished" datetime="2020-04-17T17:53:38+08:00">2020-04-17</time>
+              <time title="创建时间：2020-04-17 17:53:38 / 修改时间：19:13:04" itemprop="dateCreated datePublished" datetime="2020-04-17T17:53:38+08:00">2020-04-17</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -277,30 +277,30 @@
 
       
         <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">### 构造方法</span><br><span class="line">* &#96;&#96;&#96;File(File parent, String child)</span><br></pre></td></tr></table></figure>
-<p>从父抽象路径名和子路径名字符串创建新的 File实例。</p>
+<p>从父抽象路径名和子路径名字符串创建新的 File实例。  </p>
 <ul>
 <li><p><code>File(String pathname)</code><br>通过将给定的路径名字符串转换为抽象路径名来创建新的 File实例。</p>
 <pre><code>参数pathname为路径名称（字符串形式）
 路径可以以文件结尾，也可以以文件夹结尾
 路径可以存在，也可以不存在</code></pre></li>
-<li><p><code>File(String parent, String child)</code><br>从父路径名字符串和子路径名字符串创建新的 File实例。</p>
+<li><p><code>File(String parent, String child)</code><br>从父路径名字符串和子路径名字符串创建新的 File实例。  </p>
 <pre><code>把路径分为了两部分
 parent：父路径
 child: 子路径
 好处：父路径和子路径可以单独书写，使用起来很灵活</code></pre></li>
-<li><p><code>File(URI uri)</code><br>通过将给定的 file: URI转换为抽象路径名来创建新的 File实例。</p>
+<li><p><code>File(URI uri)</code><br>通过将给定的 file: URI转换为抽象路径名来创建新的 File实例。  </p>
 <h3 id="静态成员变量"><a href="#静态成员变量" class="headerlink" title="静态成员变量"></a>静态成员变量</h3></li>
-<li><p><code>static String pathSeparator</code><br>与系统相关的路径分隔符字符，为方便起见，表示为字符串。</p>
+<li><p><code>static String pathSeparator</code><br>与系统相关的路径分隔符字符，为方便起见，表示为字符串。 </p>
 <pre><code>路径分隔符：
     windows系统：;(分号)
     linux系统： :(冒号)</code></pre></li>
-<li><p><code>static char pathSeparatorChar</code><br>与系统相关的路径分隔符。</p>
+<li><p><code>static char pathSeparatorChar</code><br>与系统相关的路径分隔符。  </p>
 </li>
-<li><p><code>static String separator</code><br>与系统相关的默认名称分隔符字符，以方便的方式表示为字符串。</p>
+<li><p><code>static String separator</code><br>与系统相关的默认名称分隔符字符，以方便的方式表示为字符串。  </p>
 <pre><code>名称分隔字符：
     windows: \ (反斜杠)
     linux： /（正斜杠）</code></pre></li>
-<li><p><code>static char separatorChar</code><br>与系统相关的默认名称分隔符。</p>
+<li><p><code>static char separatorChar</code><br>与系统相关的默认名称分隔符。  </p>
 </li>
 </ul>
 <p>注意： 为了区分系统，尽量不要把路径写死，用这些静态变量表示</p>
@@ -333,15 +333,26 @@ child: 子路径
 </li>
 <li><p><code>boolean mkdirs()</code>: 创建由此File对象表示的目录，包括任何必须但不存在的父目录（单极或多级文件夹）</p>
 <h4 id="4-目录的遍历"><a href="#4-目录的遍历" class="headerlink" title="4.目录的遍历"></a>4.目录的遍历</h4></li>
-<li><p><code>String[] list()</code>: 返回一个字符串数组，命名由此抽象路径名表示的目录中的文件和目录。</p>
+<li><p><code>String[] list()</code>: 返回一个字符串数组，命名由此抽象路径名表示的目录中的文件和目录。 </p>
 </li>
-<li><p><code>File[] listFiles()</code>: 返回一个抽象路径名数组，表示由该抽象路径名表示的目录中的文件。</p>
+<li><p><code>File[] listFiles()</code>: 返回一个抽象路径名数组，表示由该抽象路径名表示的目录中的文件。 </p>
 <pre><code>1.路径不存在，会抛出空指针异常
 2.如果路径不是一个目录，也会抛出空指针异常
-3.隐藏文件或隐藏文件夹也可以遍历到</code></pre><p>示例：递归打印多级目录</p>
-</li>
+3.隐藏文件或隐藏文件夹也可以遍历到</code></pre></li>
 </ul>
+<p>示例：递归打印多级目录</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> 递归打印多级目录 </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        File file = <span class="keyword">new</span> File(<span class="string">"D:\\Drivers"</span>);</span><br><span class="line">        getAllFiles(file);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">getAllFiles</span><span class="params">(File dir)</span></span>&#123;</span><br><span class="line">        File[] files = dir.listFiles();</span><br><span class="line">        <span class="keyword">for</span> (File file : files) &#123;</span><br><span class="line">            System.out.println(file);</span><br><span class="line">            <span class="keyword">if</span>(file.isDirectory())  <span class="comment">//如果是一个目录就继续遍历</span></span><br><span class="line">                getAllFiles(file);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="文件过滤器"><a href="#文件过滤器" class="headerlink" title="文件过滤器"></a>文件过滤器</h3><p>遍历目录有这样两个方法：</p>
+<figure class="highlight plain"><figcaption><span>listFiles(FileFilter filter)  ```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#96;&#96;&#96;String[] list(FilenameFilter filter)</span><br></pre></td></tr></table></figure>
+<p>其中方法的参数传递的就是过滤器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">作用：用来过滤文件</span><br><span class="line">接口中只有一个方法：&#96;&#96;&#96;boolean  accept(File pathname)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">作用：用来过滤文件名称</span><br><span class="line">接口中只有一个方法：&#96;&#96;&#96;boolean  accept(File  dir,  String  name)</span><br></pre></td></tr></table></figure>
+
+<p>注意：两个接口是没有实现类的，需要我们自己写实现类，重写accept方法，自定义过滤规则</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> 过滤器 </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        File file = <span class="keyword">new</span> File(<span class="string">"D:\\Drivers"</span>);</span><br><span class="line">        getAllFiles(file);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">getAllFiles</span><span class="params">(File dir)</span></span>&#123;</span><br><span class="line">        <span class="comment">//1.FileFilter</span></span><br><span class="line">       <span class="comment">// File[] files = dir.listFiles(file -&gt; file.getName().endsWith("exe") || file.isDirectory());  //这里过滤掉不是以exe结尾的文件(因为后面还要递归遍历文件夹，所以文件夹也保留)</span></span><br><span class="line">        <span class="comment">//2.FilenameFilter</span></span><br><span class="line">        File[] files = dir.listFiles((d, name) -&gt; name.endsWith(<span class="string">"exe"</span>) || <span class="keyword">new</span> File(d, name).isDirectory());</span><br><span class="line">        <span class="keyword">for</span> (File file : files) &#123;</span><br><span class="line">            System.out.println(file);</span><br><span class="line">            <span class="keyword">if</span>(file.isDirectory())  <span class="comment">//如果是一个目录就继续遍历</span></span><br><span class="line">                getAllFiles(file);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
 
     </div>
 
@@ -450,7 +461,7 @@ child: 子路径
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#静态成员变量"><span class="nav-number">2.</span> <span class="nav-text">静态成员变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#绝对路径和相对路径"><span class="nav-number">3.</span> <span class="nav-text">绝对路径和相对路径</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用方法"><span class="nav-number">4.</span> <span class="nav-text">常用方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-获取"><span class="nav-number">4.1.</span> <span class="nav-text">1.获取</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-判断"><span class="nav-number">4.2.</span> <span class="nav-text">2.判断</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-创建和删除"><span class="nav-number">4.3.</span> <span class="nav-text">3.创建和删除</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-目录的遍历"><span class="nav-number">4.4.</span> <span class="nav-text">4.目录的遍历</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#静态成员变量"><span class="nav-number">2.</span> <span class="nav-text">静态成员变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#绝对路径和相对路径"><span class="nav-number">3.</span> <span class="nav-text">绝对路径和相对路径</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用方法"><span class="nav-number">4.</span> <span class="nav-text">常用方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-获取"><span class="nav-number">4.1.</span> <span class="nav-text">1.获取</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-判断"><span class="nav-number">4.2.</span> <span class="nav-text">2.判断</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-创建和删除"><span class="nav-number">4.3.</span> <span class="nav-text">3.创建和删除</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-目录的遍历"><span class="nav-number">4.4.</span> <span class="nav-text">4.目录的遍历</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件过滤器"><span class="nav-number">5.</span> <span class="nav-text">文件过滤器</span></a></li></ol></div>
       </div>
       <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=1353428173&auto=1&height=66"></iframe>
       <!--/noindex-->
