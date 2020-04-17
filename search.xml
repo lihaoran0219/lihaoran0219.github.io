@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title>Java File类</title>
-    <url>/lihaoran0219.github.io/2020/04/17/Java%20%20File%E7%B1%BB/</url>
+    <url>/lihaoran0219.github.io/2020/04/17/File%E7%B1%BB/</url>
     <content><![CDATA[<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">### 构造方法</span><br><span class="line">* &#96;&#96;&#96;File(File parent, String child)</span><br></pre></td></tr></table></figure>
 <p>从父抽象路径名和子路径名字符串创建新的 File实例。</p>
 <ul>
